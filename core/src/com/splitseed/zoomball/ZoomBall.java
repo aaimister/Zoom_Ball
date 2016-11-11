@@ -42,8 +42,12 @@ public class ZoomBall extends Game {
 	private Stack<View> viewStack;
 	private InputHandler inputHandler;
 
+	//private FPSLogger logger;
+
 	@Override
 	public void create () {
+		//logger = new FPSLogger();
+
 		SCREEN_WIDTH = Gdx.graphics.getWidth();
 		SCREEN_HEIGHT = Gdx.graphics.getHeight();
 		SCALE_X = SCREEN_WIDTH / DESIGN_WIDTH;
@@ -73,6 +77,9 @@ public class ZoomBall extends Game {
 
 	@Override
 	public void render () {
+		// Log FPS
+		//logger.log();
+
 		tweenManager.update(Gdx.graphics.getDeltaTime());
 		View view = (View) screen;
 		view.update(Gdx.graphics.getDeltaTime());
