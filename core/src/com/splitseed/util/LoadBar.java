@@ -1,13 +1,13 @@
 package com.splitseed.util;
 
 import aurelienribon.tweenengine.TweenManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 import com.splitseed.objects.SpriteObjectAdapter;
+import com.splitseed.zoomball.ZoomBall;
 
 public class LoadBar extends SpriteObjectAdapter {
-
-    private float startAssets;
-    private float progress;
 
     private int tapCount;
 
@@ -17,9 +17,8 @@ public class LoadBar extends SpriteObjectAdapter {
 
     public LoadBar(Assets assets, TweenManager tweenManager, float x, float y, int width, int height) {
         super(assets, tweenManager, x, y, width, height);
-        setColor(0.0f, 0.0f, 0.0f, 0.0f);
-        assets.assetManager.update();
-        startAssets = assets.assetManager.getQueuedAssets();
+        setColor(0f, 0f, 0f, 0f);
+        assets.setFontScale(0.12f * ZoomBall.SCALE_Y);
         done = false;
         show = true;
         setup = false;
@@ -30,10 +29,15 @@ public class LoadBar extends SpriteObjectAdapter {
     public void update(float delta) {
         if (!done) {
             done = assets.assetManager.update();
-            progress = assets.assetManager.getLoadedAssets() / startAssets;
         } else {
             setup();
         }
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        tapCount++;
+        return true;
     }
 
     @Override
@@ -43,23 +47,18 @@ public class LoadBar extends SpriteObjectAdapter {
             spriteBatch.draw(assets.loadBar[0], getX(), getY(), getWidth(), getHeight());
 
             spriteBatch.setColor(assets.GREEN.r, assets.GREEN.g, assets.GREEN.b, getColor().a);
-            spriteBatch.draw(assets.loadBar[0], getX(), getY(), getWidth() * progress, getHeight());
+            spriteBatch.draw(assets.loadBar[0], getX(), getY(), getWidth() * assets.assetManager.getProgress(), getHeight());
 
             spriteBatch.setColor(getColor());
-            spriteBatch.draw(assets.loadBar[0], getX(), getY(), getWidth(), getHeight());
+            spriteBatch.draw(assets.loadBar[1], getX(), getY(), getWidth(), getHeight());
 
-//            if (tapCount > 0) {
-//                spriteBatch.setColor(Color.WHITE);
-//                assets.font.getData().setScale(0.12f * scaleY, 0.12f * scaleY);
-//                AssetLoader.layout.setText(AssetLoader.font, "" + tapCount, batcher.getColor(), getWidth(), Align.center, false);
-//                float y = getY() + (getHeight() + AssetLoader.layout.height) / 2.0f;
-//                AssetLoader.font.draw(batcher, AssetLoader.layout, getX(), y);
-//            }
+            if (tapCount > 0) {
+                spriteBatch.setColor(Color.WHITE);
+                assets.layout.setText(assets.font, "" + tapCount, spriteBatch.getColor(), getWidth(), Align.center, false);
+                float y = getY() + (getHeight() - -assets.layout.height) / 2f;
+                assets.font.draw(spriteBatch, assets.layout, getX(), y);
+            }
         }
-    }
-
-    public void addTap() {
-        tapCount++;
     }
 
     public boolean doneLoading() {

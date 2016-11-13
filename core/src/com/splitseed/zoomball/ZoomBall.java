@@ -5,7 +5,6 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,7 +18,6 @@ import com.splitseed.util.InputHandler;
 import com.splitseed.objects.SpriteObject;
 import com.splitseed.view.View;
 
-import java.awt.*;
 import java.util.Stack;
 
 public class ZoomBall extends Game {

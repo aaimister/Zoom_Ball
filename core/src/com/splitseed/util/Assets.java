@@ -62,9 +62,9 @@ public class Assets {
     }
 
     public void loadRest() {
-//        TextureAtlasLoader.TextureAtlasParameter param = new TextureAtlasLoader.TextureAtlasParameter();
-//        param.flip = true;
-//        assetManager.load("data/asset manager/rest output/512.atlas", TextureAtlas.class, param);
+        TextureAtlasLoader.TextureAtlasParameter param = new TextureAtlasLoader.TextureAtlasParameter();
+        param.flip = true;
+        assetManager.load("data/asset manager/rest output/512.atlas", TextureAtlas.class, param);
     }
 
     public void setupRest() {
@@ -81,6 +81,31 @@ public class Assets {
 
     public void setTextureFilter(Texture.TextureFilter minFilter, Texture.TextureFilter maxFilter, TextureRegion ...list) {
         for (TextureRegion tr : list) { tr.getTexture().setFilter(minFilter, maxFilter); }
+    }
+
+    public void setLayoutText(String text, float scaleX) {
+        if (font.getScaleX() != scaleX) {
+            setFontScale(scaleX);
+        }
+
+        layout.setText(font, text);
+    }
+
+    public void setLayoutText(String text, Color color, float targetWidth, int halign, boolean wrap, float scaleX) {
+        if (font.getScaleX() != scaleX) {
+            setFontScale(scaleX);
+        }
+
+        layout.setText(font, text, color, targetWidth, halign, wrap);
+    }
+
+    public void setFontScale(float scale) {
+        font.getData().setScale(scale, -scale);
+    }
+
+    public float getWidth(String text, float scaleX) {
+        setLayoutText(text, scaleX);
+        return layout.width;
     }
 
     public void dispose() {

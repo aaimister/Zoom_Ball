@@ -74,7 +74,7 @@ public class SplashScreen extends ViewAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         skip = true;
-        loadBar.addTap();
+        loadBar.touchDown(screenX, screenY, pointer, button);
         return true;
     }
 

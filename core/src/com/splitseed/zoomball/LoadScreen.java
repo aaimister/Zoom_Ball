@@ -20,10 +20,11 @@ public class LoadScreen extends ViewAdapter {
         game.assets.assetManager.finishLoading();
         game.assets.setupSpload();
         game.assets.loadRest();
-        loadBar = new LoadBar(game.assets, game.tweenManager, 10, 10, (int) (100 * ZoomBall.SCALE_Y), (int) (25 * ZoomBall.SCALE_Y));
+        float size = 60 * ZoomBall.SCALE_Y;
+        loadBar = new LoadBar(game.assets, game.tweenManager, 10 * ZoomBall.SCALE_Y, ZoomBall.SCREEN_HEIGHT - (size - (size * (205f / 512f))) - (10 * ZoomBall.SCALE_Y), (int) size, (int) size);
         logo = new Sprite(game.assets.zoomBallLogo[0]);
         logo.setColor(1, 1, 1, 0);
-        float size = ZoomBall.SCREEN_WIDTH / 2.0f;
+        size = ZoomBall.SCREEN_WIDTH / 2.0f;
         logo.setBounds((ZoomBall.SCREEN_WIDTH - size) / 2.0f, (ZoomBall.SCREEN_HEIGHT - size) / 2.0f, size, size);
 
         setupTween();
@@ -31,8 +32,11 @@ public class LoadScreen extends ViewAdapter {
 
     private void setupTween() {
         Timeline.createSequence()
-                .push(Tween.to(logo, SpriteAccessor.ALPHA, 0.2f).target(1.0f).ease(TweenEquations.easeInOutQuad))
-                .pushPause(2.0f)
+                .push(Timeline.createParallel()
+                        .push(Tween.to(loadBar, SpriteAccessor.ALPHA, 0.2f).target(1.0f).ease(TweenEquations.easeInOutQuad))
+                        .push(Tween.to(logo, SpriteAccessor.ALPHA, 0.2f).target(1.0f).ease(TweenEquations.easeInOutQuad)))
+                .pushPause(1.5f)
+                .push(Tween.to(logo, SpriteAccessor.ALPHA, 0.8f).target(0.0f).ease(TweenEquations.easeInOutQuad))
                 .setCallback(new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -53,7 +57,7 @@ public class LoadScreen extends ViewAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         skip = true;
-        loadBar.addTap();
+        loadBar.touchDown(screenX, screenY, pointer, button);
         return true;
     }
 
