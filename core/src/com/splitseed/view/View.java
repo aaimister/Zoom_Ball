@@ -36,7 +36,7 @@ public abstract class View implements Screen, InputProcessor {
         // Do nothing.  This method is never going to be called.
     }
 
-    public abstract void drawBatcher(SpriteBatch batcher, float runTime);
+    public abstract void drawSpriteBatch(SpriteBatch spriteBatch, float runTime);
 
     public abstract void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime);
 

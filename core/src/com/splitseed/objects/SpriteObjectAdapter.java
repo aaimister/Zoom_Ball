@@ -7,11 +7,11 @@ import com.splitseed.util.Assets;
 
 public abstract class SpriteObjectAdapter extends SpriteObject {
 
-    public SpriteObjectAdapter(Assets assets, TweenManager tweenManager, float x, float y, int width, int height) {
+    public SpriteObjectAdapter(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(assets, tweenManager, x, y, width, height);
     }
 
-    public SpriteObjectAdapter(Texture texture, Assets assets, TweenManager tweenManager, float x, float y, int width, int height) {
+    public SpriteObjectAdapter(Texture texture, Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(texture, assets, tweenManager, x, y, width, height);
     }
 
@@ -23,6 +23,12 @@ public abstract class SpriteObjectAdapter extends SpriteObject {
     @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime) {
         // Do nothing.
+    }
+
+    @Override
+    public boolean collidedWith(SpriteObject other) {
+        // Do nothing.
+        return false;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class LoadScreen extends ViewAdapter {
         game.assets.setupSpload();
         game.assets.loadRest();
         float size = 60 * ZoomBall.SCALE_Y;
-        loadBar = new LoadBar(game.assets, game.tweenManager, 10 * ZoomBall.SCALE_Y, ZoomBall.SCREEN_HEIGHT - (size - (size * (205f / 512f))) - (10 * ZoomBall.SCALE_Y), (int) size, (int) size);
+        loadBar = new LoadBar(game.assets, game.tweenManager, 10 * ZoomBall.SCALE_Y, ZoomBall.SCREEN_HEIGHT - (size - (size * (205f / 512f))) - (10 * ZoomBall.SCALE_Y), size, size);
         logo = new Sprite(game.assets.zoomBallLogo[0]);
         logo.setColor(1, 1, 1, 0);
         size = ZoomBall.SCREEN_WIDTH / 2.0f;
@@ -62,9 +62,9 @@ public class LoadScreen extends ViewAdapter {
     }
 
     @Override
-    public void drawBatcher(SpriteBatch batcher, float runTime) {
-        logo.draw(batcher);
-        loadBar.drawSpriteBatch(batcher, runTime);
+    public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
+        logo.draw(spriteBatch);
+        loadBar.drawSpriteBatch(spriteBatch, runTime);
     }
 
     private void endScreen() {

@@ -23,8 +23,8 @@ import java.util.Stack;
 public class ZoomBall extends Game {
 
 	// The width and height the game is designed around.
-	private static float DESIGN_WIDTH = 360.0f;
-	private static float DESIGN_HEIGHT = 640.0f;
+	private static final float DESIGN_WIDTH = 360.0f;
+	private static final float DESIGN_HEIGHT = 640.0f;
 
 	public static int SCREEN_WIDTH;
 	public static int SCREEN_HEIGHT;
@@ -46,13 +46,14 @@ public class ZoomBall extends Game {
 	public void create () {
 		//logger = new FPSLogger();
 
+		assets = new Assets();
+		tweenManager = new TweenManager();
+
 		SCREEN_WIDTH = Gdx.graphics.getWidth();
 		SCREEN_HEIGHT = Gdx.graphics.getHeight();
 		SCALE_X = SCREEN_WIDTH / DESIGN_WIDTH;
 		SCALE_Y = SCREEN_HEIGHT / DESIGN_HEIGHT;
 
-		assets = new Assets();
-		tweenManager = new TweenManager();
 		Tween.setCombinedAttributesLimit(4);
 		Tween.registerAccessor(Sprite.class, new SpriteAccessor());
 		Tween.registerAccessor(SpriteObject.class, new SpriteObjectAccessor());
@@ -97,7 +98,7 @@ public class ZoomBall extends Game {
 
 		// Draw sprites second.
 		spriteBatch.begin();
-		view.drawBatcher(spriteBatch, Gdx.graphics.getDeltaTime());
+		view.drawSpriteBatch(spriteBatch, Gdx.graphics.getDeltaTime());
 		spriteBatch.end();
 	}
 	

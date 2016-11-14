@@ -15,7 +15,7 @@ public class LoadBar extends SpriteObjectAdapter {
     private boolean show;
     private boolean setup;
 
-    public LoadBar(Assets assets, TweenManager tweenManager, float x, float y, int width, int height) {
+    public LoadBar(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(assets, tweenManager, x, y, width, height);
         setColor(0f, 0f, 0f, 0f);
         assets.setFontScale(0.12f * ZoomBall.SCALE_Y);

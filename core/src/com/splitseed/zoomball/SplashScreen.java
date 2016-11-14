@@ -79,11 +79,11 @@ public class SplashScreen extends ViewAdapter {
     }
 
     @Override
-    public void drawBatcher(SpriteBatch batcher, float runTime) {
-        loadBar.drawSpriteBatch(batcher, runTime);
-        logoWhole.draw(batcher);
-        logoSplit.draw(batcher);
-        logoText.draw(batcher);
+    public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
+        loadBar.drawSpriteBatch(spriteBatch, runTime);
+        logoWhole.draw(spriteBatch);
+        logoSplit.draw(spriteBatch);
+        logoText.draw(spriteBatch);
     }
 
     private void endScreen() {

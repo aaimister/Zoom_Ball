@@ -21,7 +21,7 @@ public abstract class SpriteObject extends Sprite implements InputProcessor {
     protected TweenManager tweenManager;
     protected Circle bounds;
 
-    public SpriteObject(Assets assets, TweenManager tweenManager, float x, float y, int width, int height) {
+    public SpriteObject(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super();
         this.assets = assets;
         this.tweenManager = tweenManager;
@@ -30,7 +30,7 @@ public abstract class SpriteObject extends Sprite implements InputProcessor {
         setOrigin(x + (width / 2.0f), y + (height / 2.0f));
     }
 
-    public SpriteObject(Texture texture, Assets assets, TweenManager tweenManager, float x, float y, int width, int height) {
+    public SpriteObject(Texture texture, Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(texture);
         this.assets = assets;
         this.tweenManager = tweenManager;
@@ -54,6 +54,8 @@ public abstract class SpriteObject extends Sprite implements InputProcessor {
      * @param runTime - the run time of the current game.
      */
     public abstract void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime);
+
+    public abstract boolean collidedWith(SpriteObject other);
 
     public Circle getBoundingCircle() {
         if (bounds == null) { bounds = new Circle(); }
