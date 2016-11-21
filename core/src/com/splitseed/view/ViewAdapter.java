@@ -1,13 +1,12 @@
 package com.splitseed.view;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.splitseed.zoomball.ZoomBall;
+import com.splitseed.zoomball.Etheric;
 
 public abstract class ViewAdapter extends View {
 
-    public ViewAdapter(ZoomBall game, Color background) {
+    public ViewAdapter(Etheric game, Color background) {
         super(game, background);
     }
 
@@ -20,7 +19,7 @@ public abstract class ViewAdapter extends View {
     public void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime) {
         // Draw a rectangle that fits the screen with the current background color.
         shapeRenderer.setColor(background);
-        shapeRenderer.rect(0, 0, ZoomBall.SCREEN_WIDTH, ZoomBall.SCREEN_HEIGHT);
+        shapeRenderer.rect(0, 0, Etheric.SCREEN_WIDTH, Etheric.SCREEN_HEIGHT);
     }
 
     @Override
@@ -65,31 +64,31 @@ public abstract class ViewAdapter extends View {
 
     @Override
     public void show() {
-
+        // Do nothing.
     }
 
     @Override
     public void resize(int width, int height) {
-
+        // Do nothing.
     }
 
     @Override
     public void pause() {
-
+        // Do nothing.
     }
 
     @Override
     public void resume() {
-
+        // Do nothing.
     }
 
     @Override
     public void hide() {
-
+        // Do nothing.
     }
 
     @Override
     public void dispose() {
-
+        // Do nothing.
     }
 }

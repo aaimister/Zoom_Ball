@@ -15,17 +15,17 @@ public class LoadScreen extends ViewAdapter {
 
     private boolean skip;
 
-    public LoadScreen(ZoomBall game, Color background) {
+    public LoadScreen(Etheric game, Color background) {
         super(game, background);
         game.assets.assetManager.finishLoading();
         game.assets.setupSpload();
         game.assets.loadRest();
-        float size = 60 * ZoomBall.SCALE_Y;
-        loadBar = new LoadBar(game.assets, game.tweenManager, 10 * ZoomBall.SCALE_Y, ZoomBall.SCREEN_HEIGHT - (size - (size * (205f / 512f))) - (10 * ZoomBall.SCALE_Y), size, size);
+        float size = 60 * Etheric.SCALE_Y;
+        loadBar = new LoadBar(game.assets, game.tweenManager, 10 * Etheric.SCALE_Y, Etheric.SCREEN_HEIGHT - (size - (size * (205f / 512f))) - (10 * Etheric.SCALE_Y), size, size);
         logo = new Sprite(game.assets.zoomBallLogo[0]);
         logo.setColor(1, 1, 1, 0);
-        size = ZoomBall.SCREEN_WIDTH / 2.0f;
-        logo.setBounds((ZoomBall.SCREEN_WIDTH - size) / 2.0f, (ZoomBall.SCREEN_HEIGHT - size) / 2.0f, size, size);
+        size = Etheric.SCREEN_WIDTH / 2.0f;
+        logo.setBounds((Etheric.SCREEN_WIDTH - size) / 2.0f, (Etheric.SCREEN_HEIGHT - size) / 2.0f, size, size);
 
         setupTween();
     }

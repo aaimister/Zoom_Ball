@@ -10,20 +10,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.splitseed.accessors.ViewAccessor;
 import com.splitseed.objects.SpriteObject;
-import com.splitseed.zoomball.ZoomBall;
+import com.splitseed.zoomball.Etheric;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public abstract class View implements Screen, InputProcessor {
+public abstract class View extends Observable implements Screen, InputProcessor {
 
-    protected ZoomBall game;
+    protected Etheric game;
     protected Color background;
     private List<SpriteObject> alphaListeners;
 
     protected float alpha;
 
-    public View(ZoomBall game, Color background) {
+    public View(Etheric game, Color background) {
         this.game = game;
         this.background = background.cpy();
         alphaListeners = new ArrayList<SpriteObject>();
@@ -40,9 +41,10 @@ public abstract class View implements Screen, InputProcessor {
 
     public abstract void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime);
 
-    public View focus(Color startColor, Color endColor) {
+    public View focus(Color startColor) {
         game.tweenManager.killTarget(this);
         alpha = 0;
+        Color endColor = getBackground().cpy();
         setBackground(startColor);
         Timeline t = Timeline.createParallel();
         t.push(Tween.to(this, ViewAccessor.COLOR, 1.0f).target(endColor.r, endColor.g, endColor.b, endColor.a).ease(TweenEquations.easeInOutQuad));

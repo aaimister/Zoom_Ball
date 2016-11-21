@@ -18,7 +18,7 @@ public class SplashScreen extends ViewAdapter {
 
     private boolean skip;
 
-    public SplashScreen(ZoomBall game, Color background, LoadBar loadBar, boolean skip) {
+    public SplashScreen(Etheric game, Color background, LoadBar loadBar, boolean skip) {
         super(game, background);
         this.loadBar = loadBar;
         this.skip = skip;
@@ -31,9 +31,9 @@ public class SplashScreen extends ViewAdapter {
         logoText = new Sprite(game.assets.splitSeedLogo[2]);
         logoText.setColor(1.0f, 1.0f, 1.0f, 0.0f);
 
-        float size = ZoomBall.SCREEN_WIDTH / 2.0f;
-        float centerX = (ZoomBall.SCREEN_WIDTH - size) / 2.0f;
-        float centerY = (ZoomBall.SCREEN_HEIGHT - size) / 2.0f;
+        float size = Etheric.SCREEN_WIDTH / 2.0f;
+        float centerX = (Etheric.SCREEN_WIDTH - size) / 2.0f;
+        float centerY = (Etheric.SCREEN_HEIGHT - size) / 2.0f;
         float offsetY = size / 2.0f;
         logoWhole.setBounds(centerX, centerY - offsetY, size, size);
         logoSplit.setBounds(centerX, centerY - offsetY, size, size);
@@ -89,6 +89,7 @@ public class SplashScreen extends ViewAdapter {
     private void endScreen() {
         game.tweenManager.killAll();
         loadBar.setup();
-        game.setScreen(new MenuView(game, Color.WHITE).focus(Color.BLACK, game.assets.GREEN));
+        game.start();
+        //game.setScreen(new MenuView(game, Color.WHITE).focus(Color.BLACK, game.assets.GREEN));
     }
 }

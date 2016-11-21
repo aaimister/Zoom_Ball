@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.splitseed.objects.SpriteObjectAdapter;
-import com.splitseed.zoomball.ZoomBall;
+import com.splitseed.zoomball.Etheric;
 
 public class LoadBar extends SpriteObjectAdapter {
 
@@ -18,7 +18,7 @@ public class LoadBar extends SpriteObjectAdapter {
     public LoadBar(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(assets, tweenManager, x, y, width, height);
         setColor(0f, 0f, 0f, 0f);
-        assets.setFontScale(0.12f * ZoomBall.SCALE_Y);
+        assets.setFontScale(0.12f * Etheric.SCALE_Y);
         done = false;
         show = true;
         setup = false;

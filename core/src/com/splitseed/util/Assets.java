@@ -20,6 +20,7 @@ public class Assets {
     public TextureRegion[] loadBar;
     public TextureRegion[] zoomBallLogo;
     public TextureRegion[] splitSeedLogo;
+    public TextureRegion[] rest;
 
     public BitmapFont font;
 
@@ -68,7 +69,12 @@ public class Assets {
     }
 
     public void setupRest() {
-        // setup the rest of the assets
+        textureAtlas = assetManager.get("data/asset manager/rest output/512.atlas");
+
+        rest = new TextureRegion[] {
+                textureAtlas.findRegion("portal"), textureAtlas.findRegion("circleOutline"), textureAtlas.findRegion("square")
+        };
+        setTextureFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear, rest);
     }
 
     public Color getColor(float r, float g, float b) {
