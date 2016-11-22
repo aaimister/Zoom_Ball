@@ -38,10 +38,6 @@ public class Portal extends SpriteObjectAdapter {
         spriteBatch.setColor(Color.RED);
     }
 
-    public boolean containsEntity(Entity entity) {
-        return getBoundingCircle().contains(entity.getX() + (entity.getWidth() / 2), entity.getY() + (entity.getHeight() / 2));
-    }
-
     public void reset(float x, float y, float width, float height) {
         setRotation(0);
         setBounds(x, y, width, height);

@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.util.Assets;
@@ -87,8 +89,53 @@ public class Entity extends DynamicSpriteObject {
     @Override
     public boolean collidedWith(SpriteObject other) {
         if (other instanceof Portal) {
-            Portal portal = (Portal) other;
-            return portal.containsEntity(this);
+            return other.getBoundingCircle().contains(getX() + (getWidth() / 2), getY() + (getHeight() / 2));
+        } else if (other instanceof Wall) {
+            Circle circ = getBoundingCircle();
+            Rectangle rec = other.getBoundingRectangle();
+            float nearestX = Math.max(rec.x, Math.min(circ.x, rec.x + rec.width));
+            float nearestY = Math.max(rec.y, Math.min(circ.y, rec.y + rec.height));
+            float deltaX = circ.x - nearestX;
+            float deltaY = circ.y - nearestY;
+            if ((deltaX * deltaX + deltaY * deltaY) < (circ.radius * circ.radius)) {
+                float centerX = getX() + (getWidth() / 2);
+                float centerY = getY() + (getHeight() / 2);
+                float disX = Math.abs(nearestX - centerX);
+                float disY = Math.abs(nearestY - centerY);
+                int closestSide = disX > disY ? 0 : disY > disX ? 1 : -1;
+
+                if (closestSide == 0) {
+                    // Check for X collision
+                    float lx = other.getX();
+                    float rx = lx + other.getWidth();
+                    if (nearestX == lx) {
+                        // Check left
+                        setX(lx - getWidth());
+                        acceleration.set(0, acceleration.y);
+                        return true;
+                    } else if (nearestX == rx) {
+                        // Check right
+                        setX(rx);
+                        acceleration.set(0, acceleration.y);
+                        return true;
+                    }
+                } else if (closestSide == 1) {
+                    // Check for Y collision
+                    float ty = other.getY();
+                    float by = ty + other.getHeight();
+                    if(nearestY == ty) {
+                        // Check Top
+                        setY(ty - getWidth());
+                        acceleration.set(acceleration.x, 0);
+                        return true;
+                    } else if (nearestY == by) {
+                        // Check bottom
+                        setY(by);
+                        acceleration.set(acceleration.x, 0);
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }

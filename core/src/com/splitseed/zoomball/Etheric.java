@@ -75,9 +75,6 @@ public class Etheric extends Game implements Observer {
 		inputHandler = new InputHandler(ls);
 		Gdx.input.setInputProcessor(inputHandler);
 
-		sequence = new ShortOnTime(this);
-		sequence.addObserver(this);
-
 		setScreen(ls);
 	}
 
@@ -132,6 +129,8 @@ public class Etheric extends Game implements Observer {
 
 	// Only called from the LoadScreen to start the intro of our sequence
 	public void start() {
+		sequence = new ShortOnTime(this);
+		sequence.addObserver(this);
 		setScreen(sequence.getCurrentView().focus(Color.BLACK));
 	}
 

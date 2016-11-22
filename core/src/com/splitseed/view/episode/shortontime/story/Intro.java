@@ -72,8 +72,8 @@ public class Intro extends ViewAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        // Touch to skip
-        //nextScreen();
+        // Touch to skip for testing purposes
+        nextScreen();
         return false;
     }
 

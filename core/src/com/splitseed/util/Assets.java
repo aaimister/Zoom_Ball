@@ -29,6 +29,7 @@ public class Assets {
     public final Color GREY = getColor(50.0f, 50.0f, 50.0f);
     public final Color BLUE = getColor(5.0f, 90.0f, 167.0f);
     public final Color ORANGE = getColor(190.0f, 80.0f, 0.0f);
+    public final Color OFFWHITE = getColor(215.0f, 215.0f, 215.0f);
 
     public Assets() {
         assetManager = new AssetManager();
@@ -72,7 +73,9 @@ public class Assets {
         textureAtlas = assetManager.get("data/asset manager/rest output/512.atlas");
 
         rest = new TextureRegion[] {
-                textureAtlas.findRegion("portal"), textureAtlas.findRegion("circleOutline"), textureAtlas.findRegion("square")
+                textureAtlas.findRegion("portal"),          textureAtlas.findRegion("circleOutline"),   textureAtlas.findRegion("square"),          // 3
+                textureAtlas.findRegion("phone"),           textureAtlas.findRegion("phoneTiltUp"),     textureAtlas.findRegion("phoneTiltDown"),   // 6
+                textureAtlas.findRegion("phoneTiltLeft"),   textureAtlas.findRegion("phoneTiltRight")                                               // 8
         };
         setTextureFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear, rest);
     }

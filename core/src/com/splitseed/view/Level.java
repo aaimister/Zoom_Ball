@@ -34,6 +34,7 @@ public abstract class Level extends ViewAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        // Here for testing purposes to skip levels
         complete = false;
         setChanged();
         notifyObservers();
@@ -48,7 +49,6 @@ public abstract class Level extends ViewAdapter {
             checkCollisions();
         } else {
             if (complete && entity.hasEntered()) {
-                System.out.println("Level 01 Completed");
                 complete = false;
                 game.tweenManager.killAll();
                 setChanged();
@@ -65,7 +65,10 @@ public abstract class Level extends ViewAdapter {
         entity.drawSpriteBatch(spriteBatch, runTime);
     }
 
+    // Check to see if the entity has collided with anything
     protected void checkCollisions() {
+        for (SpriteObject so : obstacles)
+            entity.collidedWith(so);
         if (!complete && entity.collidedWith(portal)) {
             complete = true;
             entity.enterPortal(portal);
