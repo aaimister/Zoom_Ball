@@ -26,10 +26,11 @@ public class Assets {
 
     public final Color GREEN = getColor(45.0f, 166.0f, 76.0f);
     public final Color RED = getColor(166.0f, 45.0f, 48.0f);
-    public final Color GREY = getColor(50.0f, 50.0f, 50.0f);
+    public final Color GREY = getColor(190.0f, 190.0f, 190.0f);
     public final Color BLUE = getColor(5.0f, 90.0f, 167.0f);
     public final Color ORANGE = getColor(190.0f, 80.0f, 0.0f);
     public final Color OFFWHITE = getColor(215.0f, 215.0f, 215.0f);
+    public final Color BLACK = getColor(24.0f, 24.0f, 24.0f);
 
     public Assets() {
         assetManager = new AssetManager();

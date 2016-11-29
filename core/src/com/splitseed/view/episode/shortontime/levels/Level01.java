@@ -21,15 +21,12 @@ public class Level01 extends Level {
         // Set up the phone animation
         float size = 50 * Etheric.SCALE_Y;
         phoneTilt = new PhoneTilt(game.assets, game.tweenManager, (Etheric.SCREEN_WIDTH - size) / 2, (Etheric.SCREEN_HEIGHT - size) / 2, size, size, true);
+        phoneTilt.setColor(game.assets.GREY);
 
         // Set up the walls
         float width = (Etheric.SCREEN_WIDTH - (75 * Etheric.SCALE_Y)) / 2;
-        Wall w = new Wall(game.assets, game.tweenManager, 0, 0, width, Etheric.SCREEN_HEIGHT);
-        w.setColor(Color.GRAY);
-        obstacles.add(w);
-        w = new Wall(game.assets, game.tweenManager, Etheric.SCREEN_WIDTH - width, 0, width, Etheric.SCREEN_HEIGHT);
-        w.setColor(Color.GRAY);
-        obstacles.add(w);
+        addWall(game.assets.GREY, 0, 0, width, Etheric.SCREEN_HEIGHT);
+        addWall(game.assets.GREY, Etheric.SCREEN_WIDTH - width, 0, width, Etheric.SCREEN_HEIGHT);
     }
 
     @Override
@@ -40,7 +37,7 @@ public class Level01 extends Level {
         // Reset entity and portal
         float offset = 15 * Etheric.SCALE_Y;
         entity.reset((Etheric.SCREEN_WIDTH - Entity.DEFAULT_SIZE) / 2, Etheric.SCREEN_HEIGHT - Entity.DEFAULT_SIZE - offset, Entity.DEFAULT_SIZE, Entity.DEFAULT_SIZE);
-        entity.setColor(Color.GRAY);
+        entity.setColor(game.assets.GREY);
         entity.setAlpha(1);
         portal.reset((Etheric.SCREEN_WIDTH - Portal.DEFAULT_SIZE) / 2, offset, Portal.DEFAULT_SIZE, Portal.DEFAULT_SIZE);
         portal.setAlpha(0);

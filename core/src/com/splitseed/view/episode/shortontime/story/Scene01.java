@@ -11,7 +11,7 @@ import com.splitseed.zoomball.Etheric;
 
 public class Scene01 extends ViewAdapter {
 
-    private Text part1;
+    private Text research1;
 
     public Scene01(Etheric game, Color background) {
         super(game, background);
@@ -19,18 +19,18 @@ public class Scene01 extends ViewAdapter {
         float x = 10 * Etheric.SCALE_Y;
         float width = Etheric.SCREEN_WIDTH - (x * 2);
         float fontSize = 0.19f * Etheric.SCALE_Y;
-        String text = "Researcher 1 : We have signs of movement. Let us continue __ the experiment with hopes of progress with its spatial awareness.";
+        String text = "Researcher 1 : We have signs of movement. Let us continue the experiment without barriers in hopes of progress with its spatial awareness.";
         game.assets.setLayoutText(text, Color.WHITE, width, Align.center, true, fontSize);
-        part1 = new Text(game.assets, game.tweenManager, text, x, (Etheric.SCREEN_HEIGHT - -game.assets.layout.height) / 2, width, -game.assets.layout.height);
+        research1 = new Text(game.assets, game.tweenManager, text, x, (Etheric.SCREEN_HEIGHT - -game.assets.layout.height) / 2, width, -game.assets.layout.height);
 
-        addAlphaListener(part1);
+        addAlphaListener(research1);
     }
 
     @Override
     public void show() {
         Timeline.createSequence()
                 .pushPause(6)
-                .push(Tween.to(part1, SpriteAccessor.ALPHA, 0.75f).target(0).ease(TweenEquations.easeInOutQuad))
+                .push(Tween.to(research1, SpriteAccessor.ALPHA, 0.75f).target(0).ease(TweenEquations.easeInOutQuad))
                 .setCallback(new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -41,7 +41,7 @@ public class Scene01 extends ViewAdapter {
 
     @Override
     public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
-        part1.drawSpriteBatch(spriteBatch, runTime);
+        research1.drawSpriteBatch(spriteBatch, runTime);
     }
 
     @Override

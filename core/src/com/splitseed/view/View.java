@@ -1,8 +1,6 @@
 package com.splitseed.view;
 
-import aurelienribon.tweenengine.Timeline;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.*;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -20,6 +18,7 @@ public abstract class View extends Observable implements Screen, InputProcessor 
 
     protected Etheric game;
     protected Color background;
+    protected Color endColor;
     private List<SpriteObject> alphaListeners;
 
     protected float alpha;
@@ -27,6 +26,7 @@ public abstract class View extends Observable implements Screen, InputProcessor 
     public View(Etheric game, Color background) {
         this.game = game;
         this.background = background.cpy();
+        endColor = background.cpy();
         alphaListeners = new ArrayList<SpriteObject>();
     }
 
@@ -44,13 +44,12 @@ public abstract class View extends Observable implements Screen, InputProcessor 
     public View focus(Color startColor) {
         game.tweenManager.killTarget(this);
         alpha = 0;
-        Color endColor = getBackground().cpy();
         setBackground(startColor);
         Timeline t = Timeline.createParallel();
-        t.push(Tween.to(this, ViewAccessor.COLOR, 1.0f).target(endColor.r, endColor.g, endColor.b, endColor.a).ease(TweenEquations.easeInOutQuad));
-        t.push(Tween.to(this, ViewAccessor.ALPHA, 1.0f).target(1.0f).ease(TweenEquations.easeInOutQuad));
+        t.push(Tween.to(this, ViewAccessor.COLOR, 1).target(endColor.r, endColor.g, endColor.b, endColor.a).ease(TweenEquations.easeInOutQuad));
+        t.push(Tween.to(this, ViewAccessor.ALPHA, 1).target(1).ease(TweenEquations.easeInOutQuad));
         for (SpriteObject so : alphaListeners) {
-            t.push(so.fade(1.0f, 1.0f, SpriteObject.Fade.IN));
+            t.push(so.fade(1, 1, SpriteObject.Fade.IN));
         }
         t.start(game.tweenManager);
         return this;
@@ -62,6 +61,14 @@ public abstract class View extends Observable implements Screen, InputProcessor 
 
     public void setBackground(float r, float g, float b, float a) {
         background.set(r, g, b, a);
+    }
+
+    public void setEndColor(Color color) {
+        setEndColor(color.r, color.g, color.b, color.a);
+    }
+
+    public void setEndColor(float r, float g, float b, float a) {
+        endColor.set(r, g, b, a);
     }
 
     public void setAlpha(float alpha) {

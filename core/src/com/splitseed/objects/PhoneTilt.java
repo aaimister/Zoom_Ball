@@ -1,6 +1,7 @@
 package com.splitseed.objects;
 
 import aurelienribon.tweenengine.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.splitseed.accessors.SpriteAccessor;
@@ -91,5 +92,27 @@ public class PhoneTilt extends SpriteObjectAdapter {
         neutral.setAlpha(0);
         tiltOne.setAlpha(0);
         tiltTwo.setAlpha(0);
+    }
+
+    @Override
+    public void setColor(Color c) {
+        super.setColor(c);
+        if (neutral != null)
+            neutral.setColor(c);
+        if (tiltOne != null)
+            tiltOne.setColor(c);
+        if (tiltTwo != null)
+            tiltTwo.setColor(c);
+    }
+
+    @Override
+    public void setColor(float r, float g, float b, float a) {
+        super.setColor(r, g, b, a);
+        if (neutral != null)
+            neutral.setColor(r, g, b, a);
+        if (tiltOne != null)
+            tiltOne.setColor(r, g, b, a);
+        if (tiltTwo != null)
+            tiltTwo.setColor(r, g, b, a);
     }
 }

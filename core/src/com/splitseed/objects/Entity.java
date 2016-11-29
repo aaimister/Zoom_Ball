@@ -11,7 +11,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.util.Assets;
+import com.splitseed.util.SegementIntersector;
 import com.splitseed.zoomball.Etheric;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class Entity extends DynamicSpriteObject {
 
@@ -41,6 +43,9 @@ public class Entity extends DynamicSpriteObject {
             }
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 acceleration.add(0, 0.5f);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+                acceleration.setZero();
             }
         }
     }
@@ -93,47 +98,56 @@ public class Entity extends DynamicSpriteObject {
         } else if (other instanceof Wall) {
             Circle circ = getBoundingCircle();
             Rectangle rec = other.getBoundingRectangle();
-            float nearestX = Math.max(rec.x, Math.min(circ.x, rec.x + rec.width));
-            float nearestY = Math.max(rec.y, Math.min(circ.y, rec.y + rec.height));
-            float deltaX = circ.x - nearestX;
-            float deltaY = circ.y - nearestY;
-            if ((deltaX * deltaX + deltaY * deltaY) < (circ.radius * circ.radius)) {
-                float centerX = getX() + (getWidth() / 2);
-                float centerY = getY() + (getHeight() / 2);
-                float disX = Math.abs(nearestX - centerX);
-                float disY = Math.abs(nearestY - centerY);
-                int closestSide = disX > disY ? 0 : disY > disX ? 1 : -1;
+            Rectangle recExp = new Rectangle(rec.x - circ.radius, rec.y - circ.radius, rec.width + circ.radius * 2, rec.height + circ.radius * 2);
+            float centerX = getX() + (getWidth() / 2);
+            float centerY = getY() + (getHeight() / 2);
+            Vector2 next = new Vector2(centerX + velocity.x, centerY + velocity.y);
+            Vector2 intersection = new Vector2();
+            boolean isIntersection = SegementIntersector.cohenSutherlandIntersection(centerX, centerY, next.x, next.y, recExp, intersection);
+            if (isIntersection) {
+                boolean vertical = (getX() >= rec.x + 1 && getX() <= rec.x + rec.width - 1) || (getX() + getWidth() >= rec.x + 1 && getX() + getWidth() <= rec.x + rec.width - 1);
+                boolean horizontal = (getY() >= rec.y + 1 && getY() <= rec.y + rec.height - 1) || (getY() + getHeight() >= rec.y + 1 && getY() + getHeight() <= rec.y + rec.height - 1);
 
-                if (closestSide == 0) {
-                    // Check for X collision
-                    float lx = other.getX();
-                    float rx = lx + other.getWidth();
-                    if (nearestX == lx) {
-                        // Check left
-                        setX(lx - getWidth());
-                        acceleration.set(0, acceleration.y);
+                boolean isLeft = horizontal && intersection.x < rec.x;
+                boolean isRight = horizontal && intersection.x > rec.x + rec.width;
+                boolean isBottom = vertical && intersection.y > rec.y + rec.height;
+                boolean isTop = vertical && intersection.y < rec.y;
+
+                if (vertical && horizontal) {
+                    if (isBottom && isLeft) {
+                        setPosition(other.getX() - getWidth() - 1, other.getY() + other.getHeight() + 1);
+                        acceleration.set(0, 0);
                         return true;
-                    } else if (nearestX == rx) {
-                        // Check right
-                        setX(rx);
-                        acceleration.set(0, acceleration.y);
+                    } else if (isBottom && isRight) {
+                        setPosition(other.getX() + other.getWidth() + 1, other.getY() + other.getHeight() + 1);
+                        acceleration.set(0, 0);
                         return true;
-                    }
-                } else if (closestSide == 1) {
-                    // Check for Y collision
-                    float ty = other.getY();
-                    float by = ty + other.getHeight();
-                    if(nearestY == ty) {
-                        // Check Top
-                        setY(ty - getWidth());
-                        acceleration.set(acceleration.x, 0);
+                    } else if (isTop && isLeft) {
+                        setPosition(other.getX() - getWidth() - 1, other.getY() - getHeight() - 1);
+                        acceleration.set(0, 0);
                         return true;
-                    } else if (nearestY == by) {
-                        // Check bottom
-                        setY(by);
-                        acceleration.set(acceleration.x, 0);
+                    } else if (isTop && isRight) {
+                        setPosition(other.getX() + other.getWidth() + 1, other.getY() - getHeight() - 1);
+                        acceleration.set(0, 0);
                         return true;
                     }
+                }
+                if (isLeft) {
+                    setX(other.getX() - getWidth() - 1);
+                    acceleration.set(0, acceleration.y);
+                    return true;
+                } else if (isRight) {
+                    setX(other.getX() + other.getWidth() + 1);
+                    acceleration.set(0, acceleration.y);
+                    return true;
+                } else if (isBottom) {
+                    setY(other.getY() + other.getHeight() + 1);
+                    acceleration.set(acceleration.x, 0);
+                    return true;
+                } else if (isTop) {
+                    setY(other.getY() - getHeight() - 1);
+                    acceleration.set(acceleration.x, 0);
+                    return true;
                 }
             }
         }

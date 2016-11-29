@@ -2,9 +2,11 @@ package com.splitseed.view;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.splitseed.objects.Entity;
 import com.splitseed.objects.Portal;
 import com.splitseed.objects.SpriteObject;
+import com.splitseed.objects.Wall;
 import com.splitseed.zoomball.Etheric;
 
 import java.util.ArrayList;
@@ -35,9 +37,7 @@ public abstract class Level extends ViewAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Here for testing purposes to skip levels
-        complete = false;
-        setChanged();
-        notifyObservers();
+        nextScreen();
         return true;
     }
 
@@ -49,10 +49,7 @@ public abstract class Level extends ViewAdapter {
             checkCollisions();
         } else {
             if (complete && entity.hasEntered()) {
-                complete = false;
-                game.tweenManager.killAll();
-                setChanged();
-                notifyObservers();
+                nextScreen();
             }
         }
     }
@@ -73,6 +70,22 @@ public abstract class Level extends ViewAdapter {
             complete = true;
             entity.enterPortal(portal);
         }
+    }
+
+    // Add a wall with the given parameters.
+    protected void addWall(Color color, float x, float y, float width, float height) {
+        Wall w = new Wall(game.assets, game.tweenManager, x, y, width, height);
+        w.setColor(color);
+        obstacles.add(w);
+    }
+
+    // Kill all tweens and notify for a screen change
+    protected void nextScreen() {
+        complete = false;
+        //game.tweenManager.update(100);
+        game.tweenManager.killAll();
+        setChanged();
+        notifyObservers();
     }
 
 }
