@@ -16,6 +16,11 @@ public abstract class ViewAdapter extends View {
     }
 
     @Override
+    public void fadeOver() {
+        // Do nothing.
+    }
+
+    @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime) {
         // Draw a rectangle that fits the screen with the current background color.
         shapeRenderer.setColor(background);

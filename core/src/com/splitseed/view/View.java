@@ -51,9 +51,16 @@ public abstract class View extends Observable implements Screen, InputProcessor 
         for (SpriteObject so : alphaListeners) {
             t.push(so.fade(1, 1, SpriteObject.Fade.IN));
         }
-        t.start(game.tweenManager);
+        t.setCallback(new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                fadeOver();
+            }
+        }).start(game.tweenManager);
         return this;
     }
+
+    public abstract void fadeOver();
 
     public void setBackground(Color color) {
         setBackground(color.r, color.g, color.b, color.a);

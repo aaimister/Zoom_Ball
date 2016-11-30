@@ -15,8 +15,6 @@ public class Intro extends ViewAdapter {
     private Text entity;
     private Text codename;
 
-    private Timeline timeline;
-
     public Intro(Etheric game, Color background) {
         super(game, background);
 
@@ -44,7 +42,7 @@ public class Intro extends ViewAdapter {
         entity.setAlpha(0);
         codename.setAlpha(0);
         float fadeTime = 0.75f;
-        timeline = Timeline.createSequence()
+        Timeline.createSequence()
                 .pushPause(6)
                 .push(Timeline.createParallel()
                         .push(Tween.to(before, SpriteAccessor.ALPHA, fadeTime).target(0).ease(TweenEquations.easeInOutQuad))

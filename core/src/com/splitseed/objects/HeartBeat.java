@@ -21,6 +21,10 @@ public class HeartBeat {
         period = new long[] { 2000, 1000, 500, 250, 0 };
     }
 
+    public void startTimer() {
+        startTimer(0);
+    }
+
     public void startTimer(long delay) {
         length = 200;
         timer = new Timer();
@@ -28,14 +32,15 @@ public class HeartBeat {
             @Override
             public void run() {
                 //System.out.println("Beat");
-                //Gdx.input.vibrate(length);
+                Gdx.input.vibrate(length);
             }
         };
         timer.scheduleAtFixedRate(task, delay, period[pace.ordinal()]);
     }
 
     public void cancelTimer() {
-        timer.cancel();
+        if (timer != null)
+            timer.cancel();
     }
 
     public void changePace(PACE pace, long delay) {

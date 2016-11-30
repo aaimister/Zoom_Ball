@@ -14,12 +14,12 @@ public class Level02 extends Level {
         super(game, background, entity, portal);
 
         // Set up the phone animation
-        float size = 50 * Etheric.SCALE_Y;
+        float size = 45 * Etheric.SCALE_Y;
         phoneTilt = new PhoneTilt(game.assets, game.tweenManager, (Etheric.SCREEN_WIDTH - size) / 2, (Etheric.SCREEN_HEIGHT - size) / 2, size, size, false);
         phoneTilt.setColor(Color.GRAY);
 
         // Set up the walls
-        float height = (Etheric.SCREEN_HEIGHT - (75 * Etheric.SCALE_Y)) / 2;
+        float height = (Etheric.SCREEN_HEIGHT - (Entity.DEFAULT_SIZE * 2)) / 2;
         addWall(Color.GRAY, 0, 0, Etheric.SCREEN_WIDTH, height);
         addWall(Color.GRAY, 0, Etheric.SCREEN_HEIGHT - height, Etheric.SCREEN_WIDTH, height);
         // Add walls to the fade in

@@ -31,7 +31,7 @@ public class Level04 extends Level {
             // Left wall around portal
         addWall(game.assets.BLACK, x, y, Wall.DEFAULT_WALL_SIZE, Portal.DEFAULT_SIZE + (offset * 2));
             // Top wall around portal
-        addWall(game.assets.BLACK, x, y - Wall.DEFAULT_WALL_SIZE, Portal.DEFAULT_SIZE + (offset + Wall.DEFAULT_WALL_SIZE) * 2, Wall.DEFAULT_WALL_SIZE);
+        addWall(game.assets.BLACK, x - Wall.DEFAULT_WALL_SIZE, y - Wall.DEFAULT_WALL_SIZE, Portal.DEFAULT_SIZE + (offset * 2) + (Wall.DEFAULT_WALL_SIZE * 4), Wall.DEFAULT_WALL_SIZE);
         x += Wall.DEFAULT_WALL_SIZE + (offset * 2) + Portal.DEFAULT_SIZE;
             // Right wall around portal
         addWall(game.assets.BLACK, x, y, Wall.DEFAULT_WALL_SIZE, Portal.DEFAULT_SIZE + (offset * 2));
@@ -48,8 +48,6 @@ public class Level04 extends Level {
         portal.reset((Etheric.SCREEN_WIDTH - Portal.DEFAULT_SIZE) / 2, (Etheric.SCREEN_HEIGHT - Portal.DEFAULT_SIZE) / 2, Portal.DEFAULT_SIZE, Portal.DEFAULT_SIZE);
         portal.startRotation();
 
-        heartBeat.startTimer(1000);
-
         if (timeLeft > 0) {
             Timeline t = Timeline.createParallel();
             t.push(Tween.to(entity, SpriteAccessor.COLOR, timeLeft).target(game.assets.BLACK.r, game.assets.BLACK.g, game.assets.BLACK.b, 1).ease(TweenEquations.easeInOutQuad));
@@ -62,12 +60,18 @@ public class Level04 extends Level {
         }
     }
 
+    @Override
+    public void fadeOver() {
+        heartBeat.startTimer();
+    }
+
     protected void setTimeLeft(float timeLeft) {
         this.timeLeft = timeLeft;
     }
 
     @Override
     protected void nextScreen() {
+        entity.setColor(game.assets.BLACK);
         heartBeat.cancelTimer();
         super.nextScreen();
     }

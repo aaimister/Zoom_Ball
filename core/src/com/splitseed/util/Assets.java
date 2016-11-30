@@ -76,7 +76,8 @@ public class Assets {
         rest = new TextureRegion[] {
                 textureAtlas.findRegion("portal"),          textureAtlas.findRegion("circleOutline"),   textureAtlas.findRegion("square"),          // 3
                 textureAtlas.findRegion("phone"),           textureAtlas.findRegion("phoneTiltUp"),     textureAtlas.findRegion("phoneTiltDown"),   // 6
-                textureAtlas.findRegion("phoneTiltLeft"),   textureAtlas.findRegion("phoneTiltRight")                                               // 8
+                textureAtlas.findRegion("phoneTiltLeft"),   textureAtlas.findRegion("phoneTiltRight"),  textureAtlas.findRegion("pill"),            // 9
+                textureAtlas.findRegion("pillHalf")
         };
         setTextureFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear, rest);
     }

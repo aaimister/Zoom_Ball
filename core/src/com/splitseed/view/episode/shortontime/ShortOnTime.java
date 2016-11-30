@@ -2,12 +2,10 @@ package com.splitseed.view.episode.shortontime;
 
 import com.badlogic.gdx.graphics.Color;
 import com.splitseed.view.Sequence;
-import com.splitseed.view.episode.shortontime.levels.Level01;
-import com.splitseed.view.episode.shortontime.levels.Level02;
-import com.splitseed.view.episode.shortontime.levels.Level03;
-import com.splitseed.view.episode.shortontime.levels.Level04;
+import com.splitseed.view.episode.shortontime.levels.*;
 import com.splitseed.view.episode.shortontime.story.Intro;
 import com.splitseed.view.episode.shortontime.story.Scene01;
+import com.splitseed.view.episode.shortontime.story.Scene02;
 import com.splitseed.zoomball.Etheric;
 
 import java.util.Observable;
@@ -35,13 +33,13 @@ public class ShortOnTime extends Sequence {
         // Level 04
         addView(level04);
         // Scene 02
-
+        addView(new Scene02(game, Color.BLACK));
         // Level 05
-
+        addView(new Level05(game, game.assets.GREEN, entity, portal));
         // Level 06
-
+        addView(new Level06(game, game.assets.GREEN, entity, portal));
         // Level 07
-
+        addView(new Level07(game, game.assets.GREEN, entity, portal));
         // Scene 03
 
         // Level 08

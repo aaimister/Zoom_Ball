@@ -34,16 +34,16 @@ public class Level03 extends Level {
         entity.setColor(Color.GRAY);
         portal.reset(Etheric.SCREEN_WIDTH - Portal.DEFAULT_SIZE - offset, offset, Portal.DEFAULT_SIZE, Portal.DEFAULT_SIZE);
         portal.startRotation();
+    }
 
-        heartBeat.startTimer(1000);
-
-        float colorFadeTime = 15;
-        Timeline.createSequence()
-                .pushPause(1)
-                .push(Timeline.createParallel()
-                        .push(Tween.to(entity, SpriteAccessor.COLOR, colorFadeTime).target(game.assets.BLACK.r, game.assets.BLACK.g, game.assets.BLACK.b, 1).ease(TweenEquations.easeInOutQuad))
-                        .push(Tween.to(this, ViewAccessor.COLOR, colorFadeTime).target(game.assets.GREEN.r, game.assets.GREEN.g, game.assets.GREEN.b, 1).ease(TweenEquations.easeInOutQuad)))
-                .start(game.tweenManager);
+    @Override
+    public void fadeOver() {
+        heartBeat.startTimer();
+        float colorFadeTime = 14;
+        Timeline.createParallel()
+            .push(Tween.to(entity, SpriteAccessor.COLOR, colorFadeTime).target(game.assets.BLACK.r, game.assets.BLACK.g, game.assets.BLACK.b, 1).ease(TweenEquations.easeInOutQuad))
+            .push(Tween.to(this, ViewAccessor.COLOR, colorFadeTime).target(game.assets.GREEN.r, game.assets.GREEN.g, game.assets.GREEN.b, 1).ease(TweenEquations.easeInOutQuad))
+            .start(game.tweenManager);
         startTime = System.currentTimeMillis() + 14000;
     }
 

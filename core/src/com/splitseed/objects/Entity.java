@@ -13,13 +13,14 @@ import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.util.Assets;
 import com.splitseed.util.SegementIntersector;
 import com.splitseed.zoomball.Etheric;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
 public class Entity extends DynamicSpriteObject {
 
     public static final float DEFAULT_SIZE = 25 * Etheric.SCALE_Y;
 
     private Trail trail;
+
+    private int capsuleCount;
 
     private boolean entered;
 
@@ -107,13 +108,20 @@ public class Entity extends DynamicSpriteObject {
             if (isIntersection) {
                 boolean vertical = (getX() >= rec.x + 1 && getX() <= rec.x + rec.width - 1) || (getX() + getWidth() >= rec.x + 1 && getX() + getWidth() <= rec.x + rec.width - 1);
                 boolean horizontal = (getY() >= rec.y + 1 && getY() <= rec.y + rec.height - 1) || (getY() + getHeight() >= rec.y + 1 && getY() + getHeight() <= rec.y + rec.height - 1);
+                boolean resort = false;
+
+                if (!vertical && !horizontal) {
+                    resort = true;
+                    vertical = true;
+                    horizontal = true;
+                }
 
                 boolean isLeft = horizontal && intersection.x < rec.x;
                 boolean isRight = horizontal && intersection.x > rec.x + rec.width;
                 boolean isBottom = vertical && intersection.y > rec.y + rec.height;
                 boolean isTop = vertical && intersection.y < rec.y;
 
-                if (vertical && horizontal) {
+                if (resort && vertical && horizontal) {
                     if (isBottom && isLeft) {
                         setPosition(other.getX() - getWidth() - 1, other.getY() + other.getHeight() + 1);
                         acceleration.set(0, 0);
@@ -150,6 +158,15 @@ public class Entity extends DynamicSpriteObject {
                     return true;
                 }
             }
+        } else if (other instanceof Capsule) {
+            if (!((Capsule)other).isEaten()) {
+                if (other.getBoundingCircle().overlaps(getBoundingCircle())) {
+                    capsuleCount++;
+                    ((Capsule) other).eat();
+                    setSize(getWidth() + Capsule.DEFAULT_CAPSULE_GROWTH, getHeight() + Capsule.DEFAULT_CAPSULE_GROWTH);
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -165,6 +182,14 @@ public class Entity extends DynamicSpriteObject {
         setRotation(0);
         setBounds(x, y, width, height);
         setOriginCenter();
+    }
+
+    public int getCapsuleCount() {
+        return capsuleCount;
+    }
+
+    public void resetCapsuleCount() {
+        capsuleCount = 0;
     }
 
     public void enterPortal(Portal portal) {

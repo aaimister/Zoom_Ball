@@ -24,7 +24,7 @@ public class Level01 extends Level {
         phoneTilt.setColor(game.assets.GREY);
 
         // Set up the walls
-        float width = (Etheric.SCREEN_WIDTH - (75 * Etheric.SCALE_Y)) / 2;
+        float width = (Etheric.SCREEN_WIDTH - (Entity.DEFAULT_SIZE * 2)) / 2;
         addWall(game.assets.GREY, 0, 0, width, Etheric.SCREEN_HEIGHT);
         addWall(game.assets.GREY, Etheric.SCREEN_WIDTH - width, 0, width, Etheric.SCREEN_HEIGHT);
     }
@@ -36,6 +36,7 @@ public class Level01 extends Level {
         phoneTilt.reset();
         // Reset entity and portal
         float offset = 15 * Etheric.SCALE_Y;
+        entity.resetCapsuleCount();
         entity.reset((Etheric.SCREEN_WIDTH - Entity.DEFAULT_SIZE) / 2, Etheric.SCREEN_HEIGHT - Entity.DEFAULT_SIZE - offset, Entity.DEFAULT_SIZE, Entity.DEFAULT_SIZE);
         entity.setColor(game.assets.GREY);
         entity.setAlpha(1);
@@ -46,21 +47,22 @@ public class Level01 extends Level {
         // Set walls' alpha to 0
         obstacles.get(0).setAlpha(0);
         obstacles.get(1).setAlpha(0);
+    }
 
+    @Override
+    public void fadeOver() {
         // Fade in stuff and things
-        Timeline.createSequence()
-                .pushPause(1)
-                .push(Timeline.createParallel()
-                        .push(Tween.to(this, ViewAccessor.COLOR, 1).target(game.assets.OFFWHITE.r, game.assets.OFFWHITE.g, game.assets.OFFWHITE.b, 1).ease(TweenEquations.easeNone))
-                        .push(Tween.to(portal, SpriteAccessor.ALPHA, 1).target(1).ease(TweenEquations.easeNone))
-                        .push(Tween.to(obstacles.get(0), SpriteAccessor.ALPHA, 1).target(1).ease(TweenEquations.easeNone))
-                        .push(Tween.to(obstacles.get(1), SpriteAccessor.ALPHA, 1).target(1).ease(TweenEquations.easeNone)))
+        Timeline.createParallel()
+                .push(Tween.to(this, ViewAccessor.COLOR, 1).target(game.assets.OFFWHITE.r, game.assets.OFFWHITE.g, game.assets.OFFWHITE.b, 1).ease(TweenEquations.easeNone))
+                .push(Tween.to(portal, SpriteAccessor.ALPHA, 1).target(1).ease(TweenEquations.easeNone))
+                .push(Tween.to(obstacles.get(0), SpriteAccessor.ALPHA, 1).target(1).ease(TweenEquations.easeNone))
+                .push(Tween.to(obstacles.get(1), SpriteAccessor.ALPHA, 1).target(1).ease(TweenEquations.easeNone))
                 .setCallback(new TweenCallback() {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source) {
-                        phoneTilt.startAnimation();
-                    }
-                })
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                phoneTilt.startAnimation();
+            }
+        })
                 .start(game.tweenManager);
     }
 
