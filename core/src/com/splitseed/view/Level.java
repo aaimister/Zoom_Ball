@@ -3,9 +3,12 @@ package com.splitseed.view;
 import aurelienribon.tweenengine.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.splitseed.accessors.ViewAccessor;
-import com.splitseed.objects.*;
+import com.splitseed.objects.Entity;
+import com.splitseed.objects.Portal;
+import com.splitseed.objects.SpriteObject;
+import com.splitseed.objects.Wall;
+import com.splitseed.objects.capsule.Capsule;
 import com.splitseed.zoomball.Etheric;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.List;
 public abstract class Level extends ViewAdapter {
 
     protected List<SpriteObject> obstacles;
-    protected List<Capsule> capsules;
+    protected List<com.splitseed.objects.capsule.Capsule> capsules;
     protected Entity entity;
     protected Portal portal;
 
@@ -25,7 +28,7 @@ public abstract class Level extends ViewAdapter {
         this.entity = entity;
         this.portal = portal;
         obstacles = new ArrayList<SpriteObject>();
-        capsules = new ArrayList<Capsule>();
+        capsules = new ArrayList<com.splitseed.objects.capsule.Capsule>();
         complete = false;
         addAlphaListener(entity, portal);
     }
@@ -92,8 +95,9 @@ public abstract class Level extends ViewAdapter {
     }
 
     // Add a capsule with the given parameters
-    protected void addCapsule(float x, float y, float width, float height) {
-        Capsule c = new Capsule(game.assets, game.tweenManager, x, y, width, height);
+    protected void addCapsule(Capsule.CapsuleType type, float x, float y, float width, float height) {
+        Capsule c = Capsule.getCapsule(game.assets, game.tweenManager, x, y, width, height, type);
+//        Capsule c = new Capsule(game.assets, game.tweenManager, x, y, width, height);
         capsules.add(c);
         obstacles.add(c);
     }
@@ -107,7 +111,7 @@ public abstract class Level extends ViewAdapter {
 
     // Reset the capsules
     protected void resetCapsules() {
-        for (Capsule c : capsules) {
+        for (com.splitseed.objects.capsule.Capsule c : capsules) {
             c.reset();
         }
     }

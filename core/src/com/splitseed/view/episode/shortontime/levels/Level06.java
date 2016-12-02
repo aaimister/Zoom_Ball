@@ -2,6 +2,8 @@ package com.splitseed.view.episode.shortontime.levels;
 
 import com.badlogic.gdx.graphics.Color;
 import com.splitseed.objects.*;
+import com.splitseed.objects.capsule.*;
+import com.splitseed.objects.capsule.Capsule;
 import com.splitseed.view.Level;
 import com.splitseed.zoomball.Etheric;
 
@@ -30,14 +32,14 @@ public class Level06 extends Level {
 
         // Set up the capsules
             // Top Right
-        addCapsule(Etheric.SCREEN_WIDTH - Capsule.DEFAULT_CAPSULE_SIZE - (Entity.DEFAULT_SIZE / 2), (Entity.DEFAULT_SIZE * 2 - Capsule.DEFAULT_CAPSULE_SIZE) / 2, Capsule.DEFAULT_CAPSULE_SIZE, Capsule.DEFAULT_CAPSULE_SIZE);
+        addCapsule(Capsule.CapsuleType.NOURISHMENT, Etheric.SCREEN_WIDTH - NourishmentCapsule.DEFAULT_SIZE - (Entity.DEFAULT_SIZE / 2), (Entity.DEFAULT_SIZE * 2 - NourishmentCapsule.DEFAULT_SIZE) / 2, NourishmentCapsule.DEFAULT_SIZE, NourishmentCapsule.DEFAULT_SIZE);
             // Middle Left
-        float y = height + Entity.DEFAULT_SIZE * 4 + (height2 - Capsule.DEFAULT_CAPSULE_SIZE) / 2;
-        addCapsule((Entity.DEFAULT_SIZE * 2 - Capsule.DEFAULT_CAPSULE_SIZE) / 2, y, Capsule.DEFAULT_CAPSULE_SIZE, Capsule.DEFAULT_CAPSULE_SIZE);
+        float y = height + Entity.DEFAULT_SIZE * 4 + (height2 - NourishmentCapsule.DEFAULT_SIZE) / 2;
+        addCapsule(Capsule.CapsuleType.NOURISHMENT, (Entity.DEFAULT_SIZE * 2 - NourishmentCapsule.DEFAULT_SIZE) / 2, y, NourishmentCapsule.DEFAULT_SIZE, NourishmentCapsule.DEFAULT_SIZE);
             // Middle Right
-        addCapsule(Etheric.SCREEN_WIDTH - Capsule.DEFAULT_CAPSULE_SIZE - (Entity.DEFAULT_SIZE * 2 - Capsule.DEFAULT_CAPSULE_SIZE) / 2, y, Capsule.DEFAULT_CAPSULE_SIZE, Capsule.DEFAULT_CAPSULE_SIZE);
+        addCapsule(Capsule.CapsuleType.NOURISHMENT, Etheric.SCREEN_WIDTH - NourishmentCapsule.DEFAULT_SIZE - (Entity.DEFAULT_SIZE * 2 - NourishmentCapsule.DEFAULT_SIZE) / 2, y, NourishmentCapsule.DEFAULT_SIZE, NourishmentCapsule.DEFAULT_SIZE);
             // Bottom Center
-        addCapsule((Etheric.SCREEN_WIDTH - Capsule.DEFAULT_CAPSULE_SIZE) / 2, Etheric.SCREEN_HEIGHT - Capsule.DEFAULT_CAPSULE_SIZE - (Entity.DEFAULT_SIZE * 2 - Capsule.DEFAULT_CAPSULE_SIZE) / 2, Capsule.DEFAULT_CAPSULE_SIZE, Capsule.DEFAULT_CAPSULE_SIZE);
+        addCapsule(Capsule.CapsuleType.NOURISHMENT, (Etheric.SCREEN_WIDTH - NourishmentCapsule.DEFAULT_SIZE) / 2, Etheric.SCREEN_HEIGHT - NourishmentCapsule.DEFAULT_SIZE - (Entity.DEFAULT_SIZE * 2 - NourishmentCapsule.DEFAULT_SIZE) / 2, NourishmentCapsule.DEFAULT_SIZE, NourishmentCapsule.DEFAULT_SIZE);
 
         // Add the walls and capsules to the fade in
         addAlphaListener(obstacles.toArray(new SpriteObject[obstacles.size()]));
@@ -46,17 +48,22 @@ public class Level06 extends Level {
     @Override
     public void show() {
         super.show();
-        // Reset entity, portal and capsules
+        // Reset entity and portal
         float offset = Entity.DEFAULT_SIZE / 2;
-        float size = Entity.DEFAULT_SIZE + (Capsule.DEFAULT_CAPSULE_GROWTH * entity.getCapsuleCount());
+        float size = Entity.DEFAULT_SIZE + (NourishmentCapsule.DEFAULT_GROWTH * entity.getCapsuleCount());
         entity.reset(offset, offset, size, size);
         portal.reset((Etheric.SCREEN_WIDTH - Portal.DEFAULT_SIZE) / 2, obstacles.get(2).getY() + obstacles.get(2).getHeight() + 15 * Etheric.SCALE_Y, Portal.DEFAULT_SIZE, Portal.DEFAULT_SIZE);
         portal.startRotation();
+    }
+
+    @Override
+    public void preFade() {
+        // Reset capsules
         resetCapsules();
     }
 
     @Override
-    public void fadeOver() {
+    public void postFade() {
         // Start the capsule animations and heartbeat
         startCapsules();
         heartBeat.startTimer();

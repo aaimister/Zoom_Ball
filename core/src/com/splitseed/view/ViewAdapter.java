@@ -12,17 +12,22 @@ public abstract class ViewAdapter extends View {
 
     @Override
     public void update(float delta) {
-        // Do nothing.
+        // Do nothing
     }
 
     @Override
-    public void fadeOver() {
-        // Do nothing.
+    public void preFade() {
+        // Do nothing
+    }
+
+    @Override
+    public void postFade() {
+        // Do nothing
     }
 
     @Override
     public void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime) {
-        // Draw a rectangle that fits the screen with the current background color.
+        // Draw a rectangle that fits the screen with the current background color
         shapeRenderer.setColor(background);
         shapeRenderer.rect(0, 0, Etheric.SCREEN_WIDTH, Etheric.SCREEN_HEIGHT);
     }
@@ -69,31 +74,31 @@ public abstract class ViewAdapter extends View {
 
     @Override
     public void show() {
-        // Do nothing.
+        // Do nothing
     }
 
     @Override
     public void resize(int width, int height) {
-        // Do nothing.
+        // Do nothing
     }
 
     @Override
     public void pause() {
-        // Do nothing.
+        // Do nothing
     }
 
     @Override
     public void resume() {
-        // Do nothing.
+        // Do nothing
     }
 
     @Override
     public void hide() {
-        // Do nothing.
+        // Do nothing
     }
 
     @Override
     public void dispose() {
-        // Do nothing.
+        // Do nothing
     }
 }

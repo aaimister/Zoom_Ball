@@ -35,7 +35,6 @@ public class Portal extends SpriteObjectAdapter {
     public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
         spriteBatch.setColor(getColor());
         spriteBatch.draw(assets.rest[0], getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        spriteBatch.setColor(Color.RED);
     }
 
     public void reset(float x, float y, float width, float height) {

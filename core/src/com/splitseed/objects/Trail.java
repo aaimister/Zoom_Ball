@@ -34,7 +34,7 @@ public class Trail {
         }
     }
 
-    public void addTail(SpriteObject parent) {
+    public void addTail(Sprite parent) {
         float life = 0.2f;
         TrailSprite tail = new TrailSprite(textureRegion, life);
         float size = parent.getWidth();

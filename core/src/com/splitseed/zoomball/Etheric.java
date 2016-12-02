@@ -14,7 +14,6 @@ import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.accessors.ViewAccessor;
 import com.splitseed.util.Assets;
 import com.splitseed.util.InputHandler;
-import com.splitseed.objects.SpriteObject;
 import com.splitseed.view.Sequence;
 import com.splitseed.view.View;
 import com.splitseed.view.episode.shortontime.ShortOnTime;

@@ -37,7 +37,7 @@ public class Level03 extends Level {
     }
 
     @Override
-    public void fadeOver() {
+    public void postFade() {
         heartBeat.startTimer();
         float colorFadeTime = 14;
         Timeline.createParallel()

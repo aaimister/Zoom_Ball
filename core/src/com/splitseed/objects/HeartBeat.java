@@ -43,6 +43,10 @@ public class HeartBeat {
             timer.cancel();
     }
 
+    public void changePace(PACE pace) {
+        changePace(pace, 0);
+    }
+
     public void changePace(PACE pace, long delay) {
         setPace(pace);
         cancelTimer();

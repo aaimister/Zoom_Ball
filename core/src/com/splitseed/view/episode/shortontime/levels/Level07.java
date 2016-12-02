@@ -3,6 +3,8 @@ package com.splitseed.view.episode.shortontime.levels;
 import aurelienribon.tweenengine.Tween;
 import com.badlogic.gdx.graphics.Color;
 import com.splitseed.objects.*;
+import com.splitseed.objects.capsule.*;
+import com.splitseed.objects.capsule.Capsule;
 import com.splitseed.view.Level;
 import com.splitseed.zoomball.Etheric;
 
@@ -39,7 +41,7 @@ public class Level07 extends Level {
         addWall(game.assets.BLACK, 0, Etheric.SCREEN_HEIGHT - width2 * 3 - Entity.DEFAULT_SIZE * 4, x - Entity.DEFAULT_SIZE * 2, width2);
 
         // Set up the capsules
-        addCapsule((Etheric.SCREEN_WIDTH - Capsule.DEFAULT_CAPSULE_SIZE) / 2, (Etheric.SCREEN_HEIGHT - Capsule.DEFAULT_CAPSULE_SIZE) / 2, Capsule.DEFAULT_CAPSULE_SIZE, Capsule.DEFAULT_CAPSULE_SIZE);
+        addCapsule(Capsule.CapsuleType.NOURISHMENT, (Etheric.SCREEN_WIDTH - NourishmentCapsule.DEFAULT_SIZE) / 2, (Etheric.SCREEN_HEIGHT - NourishmentCapsule.DEFAULT_SIZE) / 2, NourishmentCapsule.DEFAULT_SIZE, NourishmentCapsule.DEFAULT_SIZE);
 
         // Add the walls and capsules to the fade in
         addAlphaListener(obstacles.toArray(new SpriteObject[obstacles.size()]));
@@ -49,17 +51,22 @@ public class Level07 extends Level {
     public void show() {
         super.show();
         alarm = false;
-        // Reset entity, portal and capsules
+        // Reset entity and portal
         float offset = 15 * Etheric.SCALE_Y;
-        float size = Entity.DEFAULT_SIZE + (Capsule.DEFAULT_CAPSULE_GROWTH * entity.getCapsuleCount());
+        float size = Entity.DEFAULT_SIZE + (NourishmentCapsule.DEFAULT_GROWTH * entity.getCapsuleCount());
         entity.reset(Etheric.SCREEN_WIDTH - Entity.DEFAULT_SIZE - offset, (Etheric.SCREEN_HEIGHT - Entity.DEFAULT_SIZE) / 2, size, size);
         portal.reset(offset, (Etheric.SCREEN_HEIGHT - Portal.DEFAULT_SIZE) / 2, Portal.DEFAULT_SIZE, Portal.DEFAULT_SIZE);
         portal.startRotation();
+    }
+
+    @Override
+    public void preFade() {
+        // Reset capsules
         resetCapsules();
     }
 
     @Override
-    public void fadeOver() {
+    public void postFade() {
         // Start the capsule animations and heartbeat
         startCapsules();
         heartBeat.startTimer();
@@ -68,11 +75,13 @@ public class Level07 extends Level {
     @Override
     protected void checkCollisions() {
         for (SpriteObject so : obstacles) {
-            if (so instanceof Capsule) {
+            if (so instanceof com.splitseed.objects.capsule.Capsule) {
                 if (entity.collidedWith(so)) {
                     if (!alarm) {
                         alarm = true;
-                        entity.setSize(Entity.DEFAULT_SIZE + 9 * Capsule.DEFAULT_CAPSULE_GROWTH, Entity.DEFAULT_SIZE + 9 * Capsule.DEFAULT_CAPSULE_GROWTH);
+                        float size = Entity.DEFAULT_SIZE + (NourishmentCapsule.DEFAULT_GROWTH * 9);
+                        entity.setSize(size, size);
+                        entity.startThrob();
                         Tween.call(alarmCallback).start(game.tweenManager);
                         heartBeat.changePace(HeartBeat.PACE.RAPID, 500);
                     }
@@ -83,6 +92,7 @@ public class Level07 extends Level {
         }
         if (!complete && entity.collidedWith(portal)) {
             complete = true;
+            entity.stopThrob();
             entity.enterPortal(portal);
         }
     }

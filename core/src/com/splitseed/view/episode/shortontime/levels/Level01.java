@@ -50,7 +50,7 @@ public class Level01 extends Level {
     }
 
     @Override
-    public void fadeOver() {
+    public void postFade() {
         // Fade in stuff and things
         Timeline.createParallel()
                 .push(Tween.to(this, ViewAccessor.COLOR, 1).target(game.assets.OFFWHITE.r, game.assets.OFFWHITE.g, game.assets.OFFWHITE.b, 1).ease(TweenEquations.easeNone))

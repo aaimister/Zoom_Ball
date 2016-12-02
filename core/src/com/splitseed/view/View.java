@@ -42,6 +42,7 @@ public abstract class View extends Observable implements Screen, InputProcessor 
     public abstract void drawShapeRenderer(ShapeRenderer shapeRenderer, float runTime);
 
     public View focus(Color startColor) {
+        preFade();
         game.tweenManager.killTarget(this);
         alpha = 0;
         setBackground(startColor);
@@ -54,13 +55,15 @@ public abstract class View extends Observable implements Screen, InputProcessor 
         t.setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                fadeOver();
+                postFade();
             }
         }).start(game.tweenManager);
         return this;
     }
 
-    public abstract void fadeOver();
+    public abstract void preFade();
+
+    public abstract void postFade();
 
     public void setBackground(Color color) {
         setBackground(color.r, color.g, color.b, color.a);

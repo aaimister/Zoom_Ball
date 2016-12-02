@@ -1,25 +1,21 @@
-package com.splitseed.objects;
+package com.splitseed.objects.capsule;
 
 import aurelienribon.tweenengine.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.util.Assets;
 import com.splitseed.zoomball.Etheric;
 
-public class Capsule extends SpriteObjectAdapter {
-
-    public static final float DEFAULT_CAPSULE_SIZE = 20 * Etheric.SCALE_Y;
-    public static final float DEFAULT_CAPSULE_GROWTH = 1;
+public class NourishmentCapsule extends Capsule {
+    public static final float DEFAULT_SIZE = 20 * Etheric.SCALE_Y;
+    public static final float DEFAULT_GROWTH = 1 * Etheric.SCALE_Y;
 
     private Sprite left;
     private Sprite right;
 
-    private boolean eaten;
 
-    public Capsule(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
+    public NourishmentCapsule(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(assets, tweenManager, x, y, width, height);
         left = new Sprite(assets.rest[9]);
         left.setBounds(x, y, width, height);
@@ -33,26 +29,20 @@ public class Capsule extends SpriteObjectAdapter {
     }
 
     @Override
-    public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
-//        Rectangle rec = getBoundingRectangle();
-//        spriteBatch.setColor(Color.BLACK);
-//        spriteBatch.draw(assets.rest[2], rec.x, rec.y, rec.width, rec.height);
-        left.draw(spriteBatch);
-        right.draw(spriteBatch);
-    }
-
     public void startAnimation() {
         Tween.call(rotationCallback).start(tweenManager);
         Tween.call(colorCallback).start(tweenManager);
     }
 
+    @Override
     public void stopAnimation() {
         tweenManager.killTarget(left);
         tweenManager.killTarget(right);
     }
 
+    @Override
     public void reset() {
-        eaten = false;
+        super.reset();
         left.setRotation(0);
         left.setColor(assets.RED);
         left.setScale(1);
@@ -61,6 +51,7 @@ public class Capsule extends SpriteObjectAdapter {
         right.setScale(1);
     }
 
+    @Override
     public void eat() {
         if (!eaten) {
             eaten = true;
@@ -72,6 +63,12 @@ public class Capsule extends SpriteObjectAdapter {
                     .push(Tween.to(right, SpriteAccessor.SCALE, 0.75f).target(0, 0).ease(TweenEquations.easeInOutQuad))
                     .start(tweenManager);
         }
+    }
+
+    @Override
+    public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
+        left.draw(spriteBatch);
+        right.draw(spriteBatch);
     }
 
     private final TweenCallback rotationCallback = new TweenCallback() {
@@ -105,10 +102,6 @@ public class Capsule extends SpriteObjectAdapter {
                     .start(tweenManager);
         }
     };
-
-    public boolean isEaten() {
-        return eaten;
-    }
 
     @Override
     public void setAlpha(float alpha) {

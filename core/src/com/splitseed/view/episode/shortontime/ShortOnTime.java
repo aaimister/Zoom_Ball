@@ -6,6 +6,7 @@ import com.splitseed.view.episode.shortontime.levels.*;
 import com.splitseed.view.episode.shortontime.story.Intro;
 import com.splitseed.view.episode.shortontime.story.Scene01;
 import com.splitseed.view.episode.shortontime.story.Scene02;
+import com.splitseed.view.episode.shortontime.story.Scene03;
 import com.splitseed.zoomball.Etheric;
 
 import java.util.Observable;
@@ -41,9 +42,9 @@ public class ShortOnTime extends Sequence {
         // Level 07
         addView(new Level07(game, game.assets.GREEN, entity, portal));
         // Scene 03
-
+        addView(new Scene03(game, Color.BLACK));
         // Level 08
-
+        addView(new Level08(game, game.assets.GREEN, entity, portal));
         // Level 09
 
         // Scene 04

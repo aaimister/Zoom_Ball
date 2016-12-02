@@ -5,11 +5,14 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.splitseed.accessors.SpriteAccessor;
+import com.splitseed.objects.capsule.EonCapsule;
+import com.splitseed.objects.capsule.NourishmentCapsule;
 import com.splitseed.util.Assets;
 import com.splitseed.util.SegementIntersector;
 import com.splitseed.zoomball.Etheric;
@@ -17,17 +20,61 @@ import com.splitseed.zoomball.Etheric;
 public class Entity extends DynamicSpriteObject {
 
     public static final float DEFAULT_SIZE = 25 * Etheric.SCALE_Y;
+    private static final float DEFAULT_CAST_SIZE = DEFAULT_SIZE / 1.25f;
 
+    private Sprite soul;
     private Trail trail;
 
     private int capsuleCount;
 
+    private float preThrobWidth;
+    private float preThrobHeight;
+
     private boolean entered;
+    private boolean throbbing;
+    private boolean showCast;
 
     public Entity(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(assets, tweenManager, x, y, width, height);
+        soul = new Sprite(assets.zoomBallLogo[0]);
         trail = new Trail(tweenManager, assets.zoomBallLogo[0]);
         setColor(Color.BLACK);
+    }
+
+    private TweenCallback throbCallback = new TweenCallback() {
+        @Override
+        public void onEvent(int type, BaseTween<?> source) {
+            throbbing = true;
+            float throbTime = 0.25f;
+            if (showCast) {
+                throbTime = 0.125f;
+                soul.setSize(preThrobWidth, preThrobHeight);
+            } else {
+                setSize(preThrobWidth, preThrobHeight);
+            }
+            float expand = 5 * Etheric.SCALE_Y;
+            Tween.to(showCast ? soul : Entity.this, SpriteAccessor.WIDTHHEIGHT, throbTime).target(preThrobWidth + expand, preThrobHeight + expand).ease(TweenEquations.easeInOutQuad).repeatYoyo(1, 0).setCallback(throbCallback).start(tweenManager);
+        }
+    };
+
+    public void startThrob() {
+        throbbing = true;
+        preThrobWidth = showCast ? soul.getWidth() : getWidth();
+        preThrobHeight = showCast ? soul.getHeight() : getHeight();
+        Tween.call(throbCallback).start(tweenManager);
+    }
+
+    public void stopThrob() {
+        if (throbbing) {
+            throbbing = false;
+            if (showCast) {
+                tweenManager.killTarget(soul);
+                soul.setSize(preThrobWidth, preThrobHeight);
+            } else {
+                tweenManager.killTarget(this);
+                setSize(preThrobWidth, preThrobHeight);
+            }
+        }
     }
 
     // Method to handle the input for Desktop Applications
@@ -79,9 +126,12 @@ public class Entity extends DynamicSpriteObject {
             acceleration.set(acceleration.x, 0);
         }
 
+        if (showCast)
+            soul.setPosition(getX() + (getWidth() - soul.getWidth()) / 2, getY() + (getHeight() - soul.getHeight()) / 2);
+
         // Only add a trail if the position is different from the last frame.
         if (prevPosition.x != getX() || prevPosition.y != getY()) {
-            trail.addTail(this);
+            trail.addTail(showCast ? soul : this);
         }
     }
 
@@ -89,7 +139,12 @@ public class Entity extends DynamicSpriteObject {
     public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
         spriteBatch.setColor(getColor());
         trail.drawSpriteBatch(spriteBatch, runTime);
-        spriteBatch.draw(assets.zoomBallLogo[0], getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+        if (showCast) {
+            spriteBatch.draw(assets.rest[1], getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+            soul.draw(spriteBatch);
+        } else {
+            spriteBatch.draw(assets.zoomBallLogo[0], getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+        }
     }
 
     @Override
@@ -108,10 +163,8 @@ public class Entity extends DynamicSpriteObject {
             if (isIntersection) {
                 boolean vertical = (getX() >= rec.x + 1 && getX() <= rec.x + rec.width - 1) || (getX() + getWidth() >= rec.x + 1 && getX() + getWidth() <= rec.x + rec.width - 1);
                 boolean horizontal = (getY() >= rec.y + 1 && getY() <= rec.y + rec.height - 1) || (getY() + getHeight() >= rec.y + 1 && getY() + getHeight() <= rec.y + rec.height - 1);
-                boolean resort = false;
 
                 if (!vertical && !horizontal) {
-                    resort = true;
                     vertical = true;
                     horizontal = true;
                 }
@@ -121,7 +174,7 @@ public class Entity extends DynamicSpriteObject {
                 boolean isBottom = vertical && intersection.y > rec.y + rec.height;
                 boolean isTop = vertical && intersection.y < rec.y;
 
-                if (resort && vertical && horizontal) {
+                if (vertical && horizontal) {
                     if (isBottom && isLeft) {
                         setPosition(other.getX() - getWidth() - 1, other.getY() + other.getHeight() + 1);
                         acceleration.set(0, 0);
@@ -158,12 +211,26 @@ public class Entity extends DynamicSpriteObject {
                     return true;
                 }
             }
-        } else if (other instanceof Capsule) {
-            if (!((Capsule)other).isEaten()) {
-                if (other.getBoundingCircle().overlaps(getBoundingCircle())) {
+        } else if (other instanceof NourishmentCapsule) {
+            NourishmentCapsule nc = ((NourishmentCapsule)other);
+            if (!nc.isEaten()) {
+                if (nc.getBoundingCircle().overlaps(getBoundingCircle())) {
                     capsuleCount++;
-                    ((Capsule) other).eat();
-                    setSize(getWidth() + Capsule.DEFAULT_CAPSULE_GROWTH, getHeight() + Capsule.DEFAULT_CAPSULE_GROWTH);
+                    nc.eat();
+                    setSize(getWidth() + NourishmentCapsule.DEFAULT_GROWTH, getHeight() + NourishmentCapsule.DEFAULT_GROWTH);
+                    return true;
+                }
+            }
+        } else if (other instanceof EonCapsule) {
+            EonCapsule oc = ((EonCapsule)other);
+            if (!oc.isEaten()) {
+                if (oc.getBoundingCircle().overlaps(getBoundingCircle())) {
+                    stopThrob();
+                    showCast = true;
+                    oc.eat();
+                    soul.setBounds(getX() + DEFAULT_CAST_SIZE, getY() + DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE);
+                    soul.setOriginCenter();
+                    startThrob();
                     return true;
                 }
             }
@@ -171,17 +238,34 @@ public class Entity extends DynamicSpriteObject {
         return false;
     }
 
+    public boolean showingCast() {
+        return showCast;
+    }
+
+    public boolean isThrobbing() {
+        return throbbing;
+    }
+
     public boolean hasEntered() {
         return entered;
     }
 
     public void reset(float x, float y, float width, float height) {
+        showCast = false;
+        throbbing = false;
         entered = false;
         acceleration.setZero();
         velocity.setZero();
         setRotation(0);
         setBounds(x, y, width, height);
         setOriginCenter();
+    }
+
+    public void resetCast() {
+        showCast = true;
+        soul.setRotation(0);
+        setBounds(getX() + DEFAULT_CAST_SIZE, getY() + DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE);
+        soul.setOriginCenter();
     }
 
     public int getCapsuleCount() {
@@ -199,17 +283,24 @@ public class Entity extends DynamicSpriteObject {
                 getOriginY() + ((portal.getY() + portal.getHeight() / 2) - (getY() + getHeight() / 2)));
         float centerX = portal.getX() + portal.getWidth() / 2;
         float centerY = portal.getY() + portal.getHeight() / 2;
-        Timeline.createParallel()
-                .push(Tween.to(this, SpriteAccessor.ROTATION, 1.0f).target(360).ease(TweenEquations.easeOutCubic))
-                .push(Tween.to(this, SpriteAccessor.WIDTHHEIGHT, 1.25f).target(0, 0).ease(TweenEquations.easeNone))
-                .push(Tween.to(this, SpriteAccessor.POSITION, 1.0f).target(centerX, centerY).ease(TweenEquations.easeNone))
-                .setCallback(new TweenCallback() {
+        Timeline enter = Timeline.createParallel();
+        enter.push(Tween.to(this, SpriteAccessor.ROTATION, 1.0f).target(360).ease(TweenEquations.easeOutCubic));
+        enter.push(Tween.to(this, SpriteAccessor.WIDTHHEIGHT, 1.25f).target(0, 0).ease(TweenEquations.easeNone));
+        enter.push(Tween.to(this, SpriteAccessor.POSITION, 1.0f).target(centerX, centerY).ease(TweenEquations.easeNone));
+        if (showCast) {
+            soul.setOrigin(soul.getOriginX() + ((portal.getX() + portal.getWidth() / 2) - (soul.getX() + soul.getWidth() / 2)),
+                    soul.getOriginY() + ((portal.getY() + portal.getHeight() / 2) - (soul.getY() + soul.getHeight() / 2)));
+            enter.push(Tween.to(soul, SpriteAccessor.ROTATION, 1.0f).target(360).ease(TweenEquations.easeOutCubic));
+            enter.push(Tween.to(soul, SpriteAccessor.WIDTHHEIGHT, 1.25f).target(0, 0).ease(TweenEquations.easeNone));
+            enter.push(Tween.to(soul, SpriteAccessor.POSITION, 1.0f).target(centerX, centerY).ease(TweenEquations.easeNone));
+        }
+        enter.setCallback(new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
                         entered = true;
                     }
-                })
-                .start(tweenManager);
+                });
+        enter.start(tweenManager);
     }
 
 }

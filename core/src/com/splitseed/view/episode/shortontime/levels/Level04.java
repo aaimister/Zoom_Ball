@@ -61,7 +61,7 @@ public class Level04 extends Level {
     }
 
     @Override
-    public void fadeOver() {
+    public void postFade() {
         heartBeat.startTimer();
     }
 
