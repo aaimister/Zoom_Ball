@@ -27,7 +27,7 @@ public class Wall extends SpriteObjectAdapter {
 //        rec.height = rec.height + Entity.DEFAULT_SIZE;
 //        spriteBatch.draw(assets.rest[2], rec.x, rec.y, rec.width, rec.height);
         spriteBatch.setColor(getColor());
-        spriteBatch.draw(assets.rest[2], getX(), getY(), getWidth(), getHeight());
+        spriteBatch.draw(assets.rest[1], getX(), getY(), getWidth(), getHeight());
     }
 
 }

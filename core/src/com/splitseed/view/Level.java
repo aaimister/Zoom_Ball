@@ -52,7 +52,7 @@ public abstract class Level extends ViewAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Here for testing purposes to skip levels
-        nextScreen();
+        //nextScreen();
         return true;
     }
 
@@ -111,7 +111,7 @@ public abstract class Level extends ViewAdapter {
 
     // Reset the capsules
     protected void resetCapsules() {
-        for (com.splitseed.objects.capsule.Capsule c : capsules) {
+        for (Capsule c : capsules) {
             c.reset();
         }
     }

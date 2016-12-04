@@ -17,11 +17,11 @@ public class NourishmentCapsule extends Capsule {
 
     public NourishmentCapsule(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(assets, tweenManager, x, y, width, height);
-        left = new Sprite(assets.rest[9]);
+        left = new Sprite(assets.rest[8]);
         left.setBounds(x, y, width, height);
         left.setOriginCenter();
         left.setColor(assets.RED);
-        right = new Sprite(assets.rest[9]);
+        right = new Sprite(assets.rest[8]);
         right.flip(true, false);
         right.setBounds(x, y, width, height);
         right.setOriginCenter();

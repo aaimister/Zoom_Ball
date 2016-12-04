@@ -101,4 +101,8 @@ public abstract class View extends Observable implements Screen, InputProcessor 
         for (SpriteObject so : list) { alphaListeners.remove(so); }
     }
 
+    public void clearAlphaListeners() {
+        alphaListeners.clear();
+    }
+
 }

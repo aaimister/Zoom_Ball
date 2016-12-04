@@ -17,7 +17,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-fill
+circleOutline
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -30,7 +30,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-outline
+etheric
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -43,7 +43,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-split
+fill
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -56,7 +56,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-text
+outline
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -65,6 +65,32 @@ text
   index: -1
 
 5126.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+split
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+5127.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+text
+  rotate: false
+  xy: 2, 2
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+5128.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest

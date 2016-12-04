@@ -4,7 +4,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-circleOutline
+phone
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -17,7 +17,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-phone
+phoneTiltDown
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -30,7 +30,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-phoneTiltDown
+phoneTiltLeft
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -43,7 +43,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-phoneTiltLeft
+phoneTiltRight
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -56,7 +56,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-phoneTiltRight
+phoneTiltUp
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -69,7 +69,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-phoneTiltUp
+pill
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -82,7 +82,7 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-pill
+pillHalf
   rotate: false
   xy: 2, 2
   size: 512, 512
@@ -95,19 +95,6 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-pillHalf
-  rotate: false
-  xy: 2, 2
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
-
-5129.png
-size: 1024,1024
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
 portal
   rotate: false
   xy: 2, 2
@@ -116,7 +103,7 @@ portal
   offset: 0, 0
   index: -1
 
-51210.png
+5129.png
 size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest

@@ -17,13 +17,13 @@ public class PhoneTilt extends SpriteObjectAdapter {
 
     public PhoneTilt(Assets assets, TweenManager tweenManager, float x, float y, float width, float height, boolean vertical) {
         super(assets, tweenManager, x, y, width, height);
-        neutral = new Sprite(assets.rest[3]);
+        neutral = new Sprite(assets.rest[2]);
         neutral.setBounds(x, y, width, height);
         neutral.setColor(0, 0, 0, 0);
-        tiltOne = new Sprite(assets.rest[vertical ? 4 : 6]);
+        tiltOne = new Sprite(assets.rest[vertical ? 3 : 5]);
         tiltOne.setBounds(x, y, width, height);
         tiltOne.setColor(0, 0, 0, 0);
-        tiltTwo = new Sprite(assets.rest[vertical ? 5 : 7]);
+        tiltTwo = new Sprite(assets.rest[vertical ? 4 : 6]);
         tiltTwo.setBounds(x, y, width, height);
         tiltTwo.setColor(0, 0, 0, 0);
     }

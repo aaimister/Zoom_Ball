@@ -95,7 +95,7 @@ public class Level08 extends Level {
         // Start the capsule animations, heartbeat, throbbing and alarm
         startCapsules();
         heartBeat.startTimer();
-        entity.startThrob();
+        entity.startThrob(0.25f);
         Tween.call(alarmCallback).start(game.tweenManager);
         // Show portal
         portal.setAlpha(1);

@@ -14,11 +14,12 @@ public class HeartBeat {
     private PACE pace;
 
     private long period[];
-    private int length;
+    private int length[];
 
     public HeartBeat(PACE pace) {
         this.pace = pace;
-        period = new long[] { 2000, 1000, 500, 250, 0 };
+        period = new long[] { 2000, 1000, 500, 250, 10000 };
+        length = new int[] { 200, 200, 200, 200, 10000 };
     }
 
     public void startTimer() {
@@ -26,13 +27,12 @@ public class HeartBeat {
     }
 
     public void startTimer(long delay) {
-        length = 200;
+        //length = 200;
         timer = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
-                //System.out.println("Beat");
-                Gdx.input.vibrate(length);
+                Gdx.input.vibrate(length[pace.ordinal()]);
             }
         };
         timer.scheduleAtFixedRate(task, delay, period[pace.ordinal()]);

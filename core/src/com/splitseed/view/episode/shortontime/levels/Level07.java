@@ -81,7 +81,7 @@ public class Level07 extends Level {
                         alarm = true;
                         float size = Entity.DEFAULT_SIZE + (NourishmentCapsule.DEFAULT_GROWTH * 9);
                         entity.setSize(size, size);
-                        entity.startThrob();
+                        entity.startThrob(0.25f);
                         Tween.call(alarmCallback).start(game.tweenManager);
                         heartBeat.changePace(HeartBeat.PACE.RAPID, 500);
                     }

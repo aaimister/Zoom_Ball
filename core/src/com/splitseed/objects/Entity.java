@@ -20,13 +20,15 @@ import com.splitseed.zoomball.Etheric;
 public class Entity extends DynamicSpriteObject {
 
     public static final float DEFAULT_SIZE = 25 * Etheric.SCALE_Y;
-    private static final float DEFAULT_CAST_SIZE = DEFAULT_SIZE / 1.25f;
+    public static final float DEFAULT_CAST_SIZE = DEFAULT_SIZE / 1.25f;
 
     private Sprite soul;
     private Trail trail;
 
     private int capsuleCount;
+    private int stage;
 
+    private float throbTime;
     private float preThrobWidth;
     private float preThrobHeight;
 
@@ -37,6 +39,7 @@ public class Entity extends DynamicSpriteObject {
     public Entity(Assets assets, TweenManager tweenManager, float x, float y, float width, float height) {
         super(assets, tweenManager, x, y, width, height);
         soul = new Sprite(assets.zoomBallLogo[0]);
+        soul.setColor(assets.BLACK);
         trail = new Trail(tweenManager, assets.zoomBallLogo[0]);
         setColor(Color.BLACK);
     }
@@ -45,9 +48,7 @@ public class Entity extends DynamicSpriteObject {
         @Override
         public void onEvent(int type, BaseTween<?> source) {
             throbbing = true;
-            float throbTime = 0.25f;
             if (showCast) {
-                throbTime = 0.125f;
                 soul.setSize(preThrobWidth, preThrobHeight);
             } else {
                 setSize(preThrobWidth, preThrobHeight);
@@ -57,8 +58,14 @@ public class Entity extends DynamicSpriteObject {
         }
     };
 
-    public void startThrob() {
+    public void switchThrob(float throbTime) {
+        stopThrob();
+        startThrob(throbTime);
+    }
+
+    public void startThrob(float throbTime) {
         throbbing = true;
+        this.throbTime = throbTime;
         preThrobWidth = showCast ? soul.getWidth() : getWidth();
         preThrobHeight = showCast ? soul.getHeight() : getHeight();
         Tween.call(throbCallback).start(tweenManager);
@@ -140,7 +147,7 @@ public class Entity extends DynamicSpriteObject {
         spriteBatch.setColor(getColor());
         trail.drawSpriteBatch(spriteBatch, runTime);
         if (showCast) {
-            spriteBatch.draw(assets.rest[1], getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+            spriteBatch.draw(assets.zoomBallLogo[1], getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
             soul.draw(spriteBatch);
         } else {
             spriteBatch.draw(assets.zoomBallLogo[0], getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
@@ -226,11 +233,9 @@ public class Entity extends DynamicSpriteObject {
             if (!oc.isEaten()) {
                 if (oc.getBoundingCircle().overlaps(getBoundingCircle())) {
                     stopThrob();
-                    showCast = true;
                     oc.eat();
-                    soul.setBounds(getX() + DEFAULT_CAST_SIZE, getY() + DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE);
-                    soul.setOriginCenter();
-                    startThrob();
+                    resetCast(DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE);
+                    startThrob(0.125f);
                     return true;
                 }
             }
@@ -261,10 +266,12 @@ public class Entity extends DynamicSpriteObject {
         setOriginCenter();
     }
 
-    public void resetCast() {
+    public void resetCast(float width, float height) {
         showCast = true;
+        stage = 0;
+        soul.setColor(assets.BLACK);
         soul.setRotation(0);
-        setBounds(getX() + DEFAULT_CAST_SIZE, getY() + DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE, DEFAULT_CAST_SIZE);
+        soul.setBounds(getX() + (getWidth() - width) / 2, getY() + (getHeight() - height) / 2, width, height);
         soul.setOriginCenter();
     }
 
@@ -301,6 +308,47 @@ public class Entity extends DynamicSpriteObject {
                     }
                 });
         enter.start(tweenManager);
+    }
+
+    public void setStage(int next) {
+        if (stage != next && next > stage) {
+            stage = next;
+            switch(next) {
+                case 1:
+                    stopThrob();
+                    float size = soul.getWidth() / 1.5f;
+                    Timeline.createParallel()
+                            .push(Tween.to(soul, SpriteAccessor.WIDTHHEIGHT, 1.75f).target(size, size).ease(TweenEquations.easeInOutQuad))
+                            .push(Tween.to(soul, SpriteAccessor.COLOR, 1.75f).target(assets.DARKGREY.r, assets.DARKGREY.g, assets.DARKGREY.b, 1).ease(TweenEquations.easeInOutQuad))
+                            .setCallback(new TweenCallback() {
+                                @Override
+                                public void onEvent(int type, BaseTween<?> source) {
+                                    startThrob(0.5f);
+                                }
+                            })
+                            .start(tweenManager);
+                    break;
+                case 2:
+                    stopThrob();
+                    size = soul.getWidth() / 1.5f;
+                    Timeline.createParallel()
+                            .push(Tween.to(soul, SpriteAccessor.WIDTHHEIGHT, 1.75f).target(size, size).ease(TweenEquations.easeInOutQuad))
+                            .push(Tween.to(soul, SpriteAccessor.COLOR, 1.75f).target(assets.OFFWHITE.r, assets.OFFWHITE.g, assets.OFFWHITE.b, 1).ease(TweenEquations.easeInOutQuad))
+                            .setCallback(new TweenCallback() {
+                                @Override
+                                public void onEvent(int type, BaseTween<?> source) {
+                                    startThrob(1.0f);
+                                }
+                            })
+                            .start(tweenManager);
+                    break;
+                case 3:
+                    stopThrob();
+                    Tween.to(soul, SpriteAccessor.WIDTHHEIGHT, 1.75f).target(0, 0).ease(TweenEquations.easeInOutQuad).start(tweenManager);
+                    break;
+                default:
+            }
+        }
     }
 
 }

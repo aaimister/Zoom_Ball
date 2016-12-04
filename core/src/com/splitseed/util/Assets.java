@@ -27,6 +27,7 @@ public class Assets {
     public final Color GREEN = getColor(45.0f, 166.0f, 76.0f);
     public final Color RED = getColor(166.0f, 45.0f, 48.0f);
     public final Color GREY = getColor(190.0f, 190.0f, 190.0f);
+    public final Color DARKGREY = getColor(90.0f, 90.0f, 90.0f);
     public final Color BLUE = getColor(5.0f, 90.0f, 167.0f);
     public final Color ORANGE = getColor(190.0f, 80.0f, 0.0f);
     public final Color OFFWHITE = getColor(215.0f, 215.0f, 215.0f);
@@ -51,7 +52,7 @@ public class Assets {
         setTextureFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear, loadBar);
 
         zoomBallLogo = new TextureRegion[] {
-                textureAtlas.findRegion("circle")
+                textureAtlas.findRegion("circle"), textureAtlas.findRegion("circleOutline"), textureAtlas.findRegion("etheric")
         };
         setTextureFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear, zoomBallLogo);
 
@@ -74,10 +75,9 @@ public class Assets {
         textureAtlas = assetManager.get("data/asset manager/rest output/512.atlas");
 
         rest = new TextureRegion[] {
-                textureAtlas.findRegion("portal"),          textureAtlas.findRegion("circleOutline"),   textureAtlas.findRegion("square"),          // 3
-                textureAtlas.findRegion("phone"),           textureAtlas.findRegion("phoneTiltUp"),     textureAtlas.findRegion("phoneTiltDown"),   // 6
-                textureAtlas.findRegion("phoneTiltLeft"),   textureAtlas.findRegion("phoneTiltRight"),  textureAtlas.findRegion("pill"),            // 9
-                textureAtlas.findRegion("pillHalf")
+                textureAtlas.findRegion("portal"),          textureAtlas.findRegion("square"),          textureAtlas.findRegion("phone"),          // 3
+                textureAtlas.findRegion("phoneTiltUp"),     textureAtlas.findRegion("phoneTiltDown"),   textureAtlas.findRegion("phoneTiltLeft"),  // 6
+                textureAtlas.findRegion("phoneTiltRight"),  textureAtlas.findRegion("pill"),            textureAtlas.findRegion("pillHalf")        // 9
         };
         setTextureFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear, rest);
     }

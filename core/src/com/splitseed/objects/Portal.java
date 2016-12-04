@@ -41,6 +41,7 @@ public class Portal extends SpriteObjectAdapter {
         setRotation(0);
         setBounds(x, y, width, height);
         setOriginCenter();
+        setColor(1, 1, 1, 0);
     }
 
 }

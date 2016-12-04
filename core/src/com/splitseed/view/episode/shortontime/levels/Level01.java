@@ -7,14 +7,18 @@ import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.accessors.ViewAccessor;
 import com.splitseed.objects.*;
 import com.splitseed.view.Level;
+import com.splitseed.view.episode.shortontime.ShortOnTime;
 import com.splitseed.zoomball.Etheric;
 
 public class Level01 extends Level {
 
     private PhoneTilt phoneTilt;
 
-    public Level01(Etheric game, Color background, Entity entity, Portal portal) {
+    private ShortOnTime sequence;
+
+    public Level01(Etheric game, Color background, Entity entity, Portal portal, ShortOnTime sequence) {
         super(game, background, entity, portal);
+        this.sequence = sequence;
         // Remove the entity and portal from the fade in
         removeAlphaListener(entity, portal);
 
@@ -61,6 +65,7 @@ public class Level01 extends Level {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 phoneTilt.startAnimation();
+                sequence.startTime = System.currentTimeMillis();
             }
         })
                 .start(game.tweenManager);

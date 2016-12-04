@@ -9,8 +9,6 @@ import com.splitseed.objects.Text;
 import com.splitseed.view.ViewAdapter;
 import com.splitseed.zoomball.Etheric;
 
-import java.sql.Time;
-
 public class Scene03 extends ViewAdapter{
 
     private Text researcher45;
@@ -72,7 +70,7 @@ public class Scene03 extends ViewAdapter{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Touch to skip for testing purposes
-        nextScreen();
+        //nextScreen();
         return false;
     }
 

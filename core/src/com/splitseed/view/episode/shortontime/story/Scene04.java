@@ -9,28 +9,29 @@ import com.splitseed.objects.Text;
 import com.splitseed.view.ViewAdapter;
 import com.splitseed.zoomball.Etheric;
 
-public class Scene01 extends ViewAdapter {
+public class Scene04 extends ViewAdapter {
 
-    private Text research1;
+    private Text researcher17;
 
-    public Scene01(Etheric game, Color background) {
+    public Scene04(Etheric game, Color background) {
         super(game, background);
 
         float x = 10 * Etheric.SCALE_Y;
         float width = Etheric.SCREEN_WIDTH - (x * 2);
         float fontSize = 0.19f * Etheric.SCALE_Y;
-        String text = "Researcher 1 : We have signs of movement. Let us continue the experiment without barriers in hopes of progress with its spatial awareness.";
+        String text = "Researcher 17 : All known vital signs have been lost.  No movement, no pulse.";
         game.assets.setLayoutText(text, Color.WHITE, width, Align.center, true, fontSize);
-        research1 = new Text(game.assets, game.tweenManager, text, x, (Etheric.SCREEN_HEIGHT - -game.assets.layout.height) / 2, width, -game.assets.layout.height);
+        researcher17 = new Text(game.assets, game.tweenManager, text, x, (Etheric.SCREEN_HEIGHT - -game.assets.layout.height) / 2, width, -game.assets.layout.height);
 
-        addAlphaListener(research1);
+        addAlphaListener(researcher17);
     }
 
     @Override
-    public void show() {
+    public void postFade() {
+        float fadeTime = 0.75f;
         Timeline.createSequence()
-                .pushPause(6)
-                .push(Tween.to(research1, SpriteAccessor.ALPHA, 0.75f).target(0).ease(TweenEquations.easeInOutQuad))
+                .pushPause(3)
+                .push(Tween.to(researcher17, SpriteAccessor.ALPHA, fadeTime).target(0).ease(TweenEquations.easeInOutQuad))
                 .setCallback(new TweenCallback() {
                     @Override
                     public void onEvent(int type, BaseTween<?> source) {
@@ -41,7 +42,7 @@ public class Scene01 extends ViewAdapter {
 
     @Override
     public void drawSpriteBatch(SpriteBatch spriteBatch, float runTime) {
-        research1.drawSpriteBatch(spriteBatch, runTime);
+        researcher17.drawSpriteBatch(spriteBatch, runTime);
     }
 
     @Override
