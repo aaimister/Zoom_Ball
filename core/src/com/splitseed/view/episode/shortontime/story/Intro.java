@@ -30,7 +30,7 @@ public class Intro extends ViewAdapter {
         game.assets.setLayoutText(text, Color.WHITE, width, Align.center, true, fontSize);
         entity = new Text(game.assets, game.tweenManager, text, x, halfY - (-game.assets.layout.height / 2), width, -game.assets.layout.height);
 
-        text = "...It was labeled as CODENAME: ETHERIC";
+        text = "...It was labeled as CODENAME : ETHERIC";
         game.assets.setLayoutText(text, Color.WHITE, width, Align.center, true, fontSize);
         codename = new Text(game.assets, game.tweenManager, text, x, halfY - (-game.assets.layout.height / 2), width, -game.assets.layout.height);
 
@@ -41,16 +41,16 @@ public class Intro extends ViewAdapter {
     public void show() {
         entity.setAlpha(0);
         codename.setAlpha(0);
-        float fadeTime = 0.75f;
+        float fadeTime = 0.85f;
         Timeline.createSequence()
                 .pushPause(6)
-                .push(Timeline.createParallel()
-                        .push(Tween.to(before, SpriteAccessor.ALPHA, fadeTime).target(0).ease(TweenEquations.easeInOutQuad))
-                        .push(Tween.to(entity, SpriteAccessor.ALPHA, fadeTime).target(1).ease(TweenEquations.easeInOutQuad)))
+                .push(Tween.to(before, SpriteAccessor.ALPHA, fadeTime).target(0).ease(TweenEquations.easeInOutQuad))
+                .pushPause(0.25f)
+                .push(Tween.to(entity, SpriteAccessor.ALPHA, fadeTime).target(1).ease(TweenEquations.easeInOutQuad))
                 .pushPause(4.5f)
-                .push(Timeline.createParallel()
-                        .push(Tween.to(entity, SpriteAccessor.ALPHA, fadeTime).target(0).ease(TweenEquations.easeInOutQuad))
-                        .push(Tween.to(codename, SpriteAccessor.ALPHA, fadeTime).target(1).ease(TweenEquations.easeInOutQuad)))
+                .push(Tween.to(entity, SpriteAccessor.ALPHA, fadeTime).target(0).ease(TweenEquations.easeInOutQuad))
+                .pushPause(0.25f)
+                .push(Tween.to(codename, SpriteAccessor.ALPHA, fadeTime).target(1).ease(TweenEquations.easeInOutQuad))
                 .pushPause(3)
                 .push(Tween.to(codename, SpriteAccessor.ALPHA, fadeTime).target(0).ease(TweenEquations.easeInOutQuad))
                 .setCallback(new TweenCallback() {
@@ -71,7 +71,7 @@ public class Intro extends ViewAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         // Touch to skip for testing purposes
-        //nextScreen();
+        nextScreen();
         return false;
     }
 

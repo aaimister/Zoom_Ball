@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class Level extends ViewAdapter {
 
     protected List<SpriteObject> obstacles;
-    protected List<com.splitseed.objects.capsule.Capsule> capsules;
+    protected List<Capsule> capsules;
     protected Entity entity;
     protected Portal portal;
 
@@ -28,7 +28,7 @@ public abstract class Level extends ViewAdapter {
         this.entity = entity;
         this.portal = portal;
         obstacles = new ArrayList<SpriteObject>();
-        capsules = new ArrayList<com.splitseed.objects.capsule.Capsule>();
+        capsules = new ArrayList<Capsule>();
         complete = false;
         addAlphaListener(entity, portal);
     }

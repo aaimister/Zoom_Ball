@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.util.LoadBar;
 import com.splitseed.view.ViewAdapter;
-import com.splitseed.view.menu.MenuView;
 
 public class SplashScreen extends ViewAdapter {
 

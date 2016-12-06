@@ -62,7 +62,7 @@ public class Level09 extends Level {
     @Override
     public void postFade() {
         // Start heartbeat, throbbing and alarm
-        heartBeat.startTimer();
+        heartBeat.changePace(HeartBeat.PACE.FATAL);
         entity.startThrob(0.125f);
         Tween.call(alarmCallback).start(game.tweenManager);
     }

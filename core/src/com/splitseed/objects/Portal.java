@@ -1,7 +1,6 @@
 package com.splitseed.objects;
 
 import aurelienribon.tweenengine.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.splitseed.accessors.SpriteAccessor;
 import com.splitseed.util.Assets;

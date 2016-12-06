@@ -22,6 +22,7 @@ public class Level07 extends Level {
         // Set up the walls
         float width = (Etheric.SCREEN_WIDTH - Entity.DEFAULT_SIZE * 2) / 2;
         float height = (Etheric.SCREEN_HEIGHT - Entity.DEFAULT_SIZE * 6) / 2;
+        float overlap = 1 * Etheric.SCALE_Y;
             // Top Right
         addWall(game.assets.BLACK, Etheric.SCREEN_WIDTH - width, Entity.DEFAULT_SIZE * 2, width, height);
             // Bottom Right
@@ -32,9 +33,9 @@ public class Level07 extends Level {
         float x = Portal.DEFAULT_SIZE + (30 * Etheric.SCALE_Y) + Entity.DEFAULT_SIZE * 2;
         addWall(game.assets.BLACK, x, Entity.DEFAULT_SIZE * 2, width2, height2);
             // Top Center
-        addWall(game.assets.BLACK, Entity.DEFAULT_SIZE * 2, Entity.DEFAULT_SIZE * 2 + width2, x - Entity.DEFAULT_SIZE * 2, width2);
+        addWall(game.assets.BLACK, Entity.DEFAULT_SIZE * 2, Entity.DEFAULT_SIZE * 2 + width2, x - Entity.DEFAULT_SIZE * 2 + overlap, width2);
             // Bottom Center
-        addWall(game.assets.BLACK, Entity.DEFAULT_SIZE * 2, Etheric.SCREEN_HEIGHT - width2 * 2 - Entity.DEFAULT_SIZE * 2, x - Entity.DEFAULT_SIZE * 2, width2);
+        addWall(game.assets.BLACK, Entity.DEFAULT_SIZE * 2, Etheric.SCREEN_HEIGHT - width2 * 2 - Entity.DEFAULT_SIZE * 2, x - Entity.DEFAULT_SIZE * 2 + overlap, width2);
             // Left Top Center
         addWall(game.assets.BLACK, 0, Entity.DEFAULT_SIZE * 4 + width2 * 2, x - Entity.DEFAULT_SIZE * 2, width2);
             // Left Bottom Center
@@ -43,8 +44,8 @@ public class Level07 extends Level {
         // Set up the capsules
         addCapsule(Capsule.CapsuleType.NOURISHMENT, (Etheric.SCREEN_WIDTH - NourishmentCapsule.DEFAULT_SIZE) / 2, (Etheric.SCREEN_HEIGHT - NourishmentCapsule.DEFAULT_SIZE) / 2, NourishmentCapsule.DEFAULT_SIZE, NourishmentCapsule.DEFAULT_SIZE);
 
-        // Add the walls and capsules to the fade in
-        addAlphaListener(obstacles.toArray(new SpriteObject[obstacles.size()]));
+        // Add the capsules to the fade in to avoid seeing wall overlap
+        addAlphaListener(capsules.toArray(new SpriteObject[capsules.size()]));
     }
 
     @Override
@@ -69,7 +70,7 @@ public class Level07 extends Level {
     public void postFade() {
         // Start the capsule animations and heartbeat
         startCapsules();
-        heartBeat.startTimer();
+        heartBeat.changePace(HeartBeat.PACE.STEADY);
     }
 
     @Override

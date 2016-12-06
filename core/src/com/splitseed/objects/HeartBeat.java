@@ -18,8 +18,8 @@ public class HeartBeat {
 
     public HeartBeat(PACE pace) {
         this.pace = pace;
-        period = new long[] { 2000, 1000, 500, 250, 10000 };
-        length = new int[] { 200, 200, 200, 200, 10000 };
+        period = new long[] { 2000, 1000, 500, 250, 2000 };
+        length = new int[] { 200, 200, 200, 200, 2000 };
     }
 
     public void startTimer() {
@@ -39,8 +39,11 @@ public class HeartBeat {
     }
 
     public void cancelTimer() {
-        if (timer != null)
+        Gdx.input.cancelVibrate();
+        if (timer != null) {
             timer.cancel();
+            timer.purge();
+        }
     }
 
     public void changePace(PACE pace) {
@@ -48,8 +51,8 @@ public class HeartBeat {
     }
 
     public void changePace(PACE pace, long delay) {
-        setPace(pace);
         cancelTimer();
+        setPace(pace);
         startTimer(delay);
     }
 
