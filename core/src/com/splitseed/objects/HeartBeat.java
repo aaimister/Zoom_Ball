@@ -18,6 +18,7 @@ public class HeartBeat {
 
     public HeartBeat(PACE pace) {
         this.pace = pace;
+        // 2000, 1000, 700, 500, 200 for iOS
         period = new long[] { 2000, 1000, 500, 250, 2000 };
         length = new int[] { 200, 200, 200, 200, 2000 };
     }

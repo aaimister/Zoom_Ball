@@ -26,7 +26,7 @@ public class Intro extends ViewAdapter {
         game.assets.setLayoutText(text, Color.WHITE, width, Align.center, true, fontSize);
         before = new Text(game.assets, game.tweenManager, text, x, halfY - (-game.assets.layout.height / 2), width, -game.assets.layout.height);
 
-        text = "...This taboo research resulted in Earths 1st known record of a conciously aware transient entity...";
+        text = "...This taboo research resulted in Earth's 1st known record of a conciously aware transcendent entity...";
         game.assets.setLayoutText(text, Color.WHITE, width, Align.center, true, fontSize);
         entity = new Text(game.assets, game.tweenManager, text, x, halfY - (-game.assets.layout.height / 2), width, -game.assets.layout.height);
 
