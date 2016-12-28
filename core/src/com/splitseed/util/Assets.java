@@ -23,14 +23,23 @@ public class Assets {
 
     public BitmapFont font;
 
-    public final Color GREEN = getColor(45.0f, 166.0f, 76.0f);
-    public final Color RED = getColor(166.0f, 45.0f, 48.0f);
-    public final Color GREY = getColor(190.0f, 190.0f, 190.0f);
-    public final Color DARKGREY = getColor(90.0f, 90.0f, 90.0f);
-    public final Color BLUE = getColor(5.0f, 90.0f, 167.0f);
-    public final Color ORANGE = getColor(190.0f, 80.0f, 0.0f);
-    public final Color OFFWHITE = getColor(215.0f, 215.0f, 215.0f);
-    public final Color BLACK = getColor(24.0f, 24.0f, 24.0f);
+//    public final Color GREEN = getColor(45.0f, 166.0f, 76.0f);
+//    public final Color RED = getColor(166.0f, 45.0f, 48.0f);
+//    public final Color GREY = getColor(190.0f, 190.0f, 190.0f);
+//    public final Color DARKGREY = getColor(90.0f, 90.0f, 90.0f);
+//    public final Color BLUE = getColor(5.0f, 90.0f, 167.0f);
+//    public final Color ORANGE = getColor(190.0f, 80.0f, 0.0f);
+//    public final Color OFFWHITE = getColor(215.0f, 215.0f, 215.0f);
+//    public final Color BLACK = getColor(24.0f, 24.0f, 24.0f);
+
+    public final Color GREEN = getColor(76.0f, 175.0f, 80.0f);
+    public final Color RED = getColor(244.0f, 67.0f, 54.0f);
+    public final Color GREY = getColor(158.0f, 158.0f, 158.0f);
+    public final Color DARKGREY = getColor(97.0f, 97.0f, 97.0f);
+    public final Color BLUE = getColor(33.0f, 150.0f, 243.0f);
+    public final Color ORANGE = getColor(255.0f, 152.0f, 0.0f);
+    public final Color OFFWHITE = getColor(238.0f, 238.0f, 238.0f);
+    public final Color BLACK = getColor(33.0f, 33.0f, 33.0f);
 
     public Assets() {
         assetManager = new AssetManager();

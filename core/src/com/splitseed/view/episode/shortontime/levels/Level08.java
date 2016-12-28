@@ -98,7 +98,7 @@ public class Level08 extends Level {
     public void postFade() {
         // Start the capsule animations, heartbeat, throbbing and alarm
         startCapsules();
-        heartBeat.changePace(HeartBeat.PACE.FATAL);
+        heartBeat.changePace(HeartBeat.PACE.RAPID);
         entity.startThrob(0.25f);
         Tween.call(alarmCallback).start(game.tweenManager);
         // Show portal
